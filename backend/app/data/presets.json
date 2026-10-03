@@ -1,0 +1,57 @@
+[
+  {
+    "id": "velachery_2015",
+    "name": "Velachery & Pallikaranai 2015 Deluge",
+    "description": "Severe bowl depression flooding from lake breach and marshland backflow, cutting off Velachery Main Road.",
+    "center": [12.9796, 80.2185],
+    "radius_meters": 2500,
+    "flood_depth_meters": 2.2,
+    "rainfall_intensity": 4,
+    "spread_rate_meters_hr": 200,
+    "duration_hours": 6
+  },
+  {
+    "id": "adyar_basin",
+    "name": "Adyar River Basin Overflow",
+    "description": "Massive fluvial surge along Saidapet and Jafferkhanpet submerging Maraimalai Adigal Bridge.",
+    "center": [13.0158, 80.2224],
+    "radius_meters": 3000,
+    "flood_depth_meters": 2.8,
+    "rainfall_intensity": 5,
+    "spread_rate_meters_hr": 250,
+    "duration_hours": 6
+  },
+  {
+    "id": "chembarambakkam_outflow",
+    "name": "Chembarambakkam Reservoir Outflow Surge",
+    "description": "Excess discharge of over 30,000 cusecs flooding Manapakkam, Ramapuram, and Nandambakkam lowlands.",
+    "center": [13.0250, 80.1700],
+    "radius_meters": 3500,
+    "flood_depth_meters": 3.0,
+    "rainfall_intensity": 5,
+    "spread_rate_meters_hr": 300,
+    "duration_hours": 6
+  },
+  {
+    "id": "mudichur_surge",
+    "name": "Mudichur-Tambaram Suburban Submergence",
+    "description": "Headwaters overflow inundating residential layouts in Mudichur and Tambaram West.",
+    "center": [12.9100, 80.0800],
+    "radius_meters": 2800,
+    "flood_depth_meters": 2.5,
+    "rainfall_intensity": 4,
+    "spread_rate_meters_hr": 180,
+    "duration_hours": 6
+  },
+  {
+    "id": "michaung_2023",
+    "name": "Cyclone Michaung 2023 Urban Flash Flood",
+    "description": "Urban flash flooding centered in T. Nagar and Mambalam Canal corridor with severe street waterlogging.",
+    "center": [13.0418, 80.2341],
+    "radius_meters": 2200,
+    "flood_depth_meters": 1.8,
+    "rainfall_intensity": 4,
+    "spread_rate_meters_hr": 150,
+    "duration_hours": 6
+  }
+]

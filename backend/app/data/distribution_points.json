@@ -1,0 +1,122 @@
+[
+  {
+    "id": "DP-01",
+    "name": "Saidapet Govt Girls High School Camp",
+    "location": [13.0213, 80.2231],
+    "target_ward": "Saidapet / Adyar River",
+    "assigned_evacuee_capacity": 4500,
+    "demand": {
+      "water_litres": 13500,
+      "food_rations": 13500,
+      "medical_kits": 90
+    }
+  },
+  {
+    "id": "DP-02",
+    "name": "Velachery Guru Nanak College Camp",
+    "location": [12.9790, 80.2210],
+    "target_ward": "Velachery / Pallikaranai",
+    "assigned_evacuee_capacity": 6000,
+    "demand": {
+      "water_litres": 18000,
+      "food_rations": 18000,
+      "medical_kits": 120
+    }
+  },
+  {
+    "id": "DP-03",
+    "name": "Adyar Cancer Institute Relief Staging",
+    "location": [13.0067, 80.2450],
+    "target_ward": "Lower Adyar Estuary",
+    "assigned_evacuee_capacity": 3500,
+    "demand": {
+      "water_litres": 10500,
+      "food_rations": 10500,
+      "medical_kits": 70
+    }
+  },
+  {
+    "id": "DP-04",
+    "name": "T. Nagar Ramakrishna Mission Camp",
+    "location": [13.0418, 80.2341],
+    "target_ward": "T. Nagar / Mambalam Canal",
+    "assigned_evacuee_capacity": 5000,
+    "demand": {
+      "water_litres": 15000,
+      "food_rations": 15000,
+      "medical_kits": 100
+    }
+  },
+  {
+    "id": "DP-05",
+    "name": "Mylapore Lady Sivaswami School",
+    "location": [13.0334, 80.2675],
+    "target_ward": "Buckingham Canal / Mylapore",
+    "assigned_evacuee_capacity": 3800,
+    "demand": {
+      "water_litres": 11400,
+      "food_rations": 11400,
+      "medical_kits": 76
+    }
+  },
+  {
+    "id": "DP-06",
+    "name": "Perambur Railway Stadium Camp",
+    "location": [13.1075, 80.2435],
+    "target_ward": "Otteri Nullah / Perambur",
+    "assigned_evacuee_capacity": 4200,
+    "demand": {
+      "water_litres": 12600,
+      "food_rations": 12600,
+      "medical_kits": 84
+    }
+  },
+  {
+    "id": "DP-07",
+    "name": "Kolathur Corporation Community Hall",
+    "location": [13.1235, 80.2195],
+    "target_ward": "Red Hills Basin / Kolathur",
+    "assigned_evacuee_capacity": 3200,
+    "demand": {
+      "water_litres": 9600,
+      "food_rations": 9600,
+      "medical_kits": 64
+    }
+  },
+  {
+    "id": "DP-08",
+    "name": "Thiruvanmiyur Community Centre",
+    "location": [12.9865, 80.2605],
+    "target_ward": "South Coastal / ECR Corridor",
+    "assigned_evacuee_capacity": 3000,
+    "demand": {
+      "water_litres": 9000,
+      "food_rations": 9000,
+      "medical_kits": 60
+    }
+  },
+  {
+    "id": "DP-09",
+    "name": "Madipakkam Govt High School Camp",
+    "location": [12.9620, 80.1980],
+    "target_ward": "Madipakkam Lake Catchment",
+    "assigned_evacuee_capacity": 4000,
+    "demand": {
+      "water_litres": 12000,
+      "food_rations": 12000,
+      "medical_kits": 80
+    }
+  },
+  {
+    "id": "DP-10",
+    "name": "Jafferkhanpet Relief Centre",
+    "location": [13.0305, 80.2078],
+    "target_ward": "Middle Adyar River Basin",
+    "assigned_evacuee_capacity": 4500,
+    "demand": {
+      "water_litres": 13500,
+      "food_rations": 13500,
+      "medical_kits": 90
+    }
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "WH-01",
+    "name": "Chennai Port Maritime Terminal",
+    "location": [13.0838, 80.2932],
+    "address": "Rajaji Salai, George Town, Chennai",
+    "supplies": {
+      "water_litres": 300000,
+      "food_rations": 80000,
+      "medical_kits": 3500
+    }
+  },
+  {
+    "id": "WH-02",
+    "name": "Koyambedu Wholesale Logistics Terminal",
+    "location": [13.0694, 80.1914],
+    "address": "Poonamallee High Road & Inner Ring Road, Koyambedu",
+    "supplies": {
+      "water_litres": 250000,
+      "food_rations": 70000,
+      "medical_kits": 2000
+    }
+  },
+  {
+    "id": "WH-03",
+    "name": "Airport Air Cargo Relief Hub",
+    "location": [12.9866, 80.1650],
+    "address": "GST Road, Meenambakkam",
+    "supplies": {
+      "water_litres": 150000,
+      "food_rations": 40000,
+      "medical_kits": 4000
+    }
+  },
+  {
+    "id": "WH-04",
+    "name": "Tambaram Railway Goods Depot",
+    "location": [12.9249, 80.1190],
+    "address": "GST Road & Chennai Bypass, Tambaram",
+    "supplies": {
+      "water_litres": 200000,
+      "food_rations": 50000,
+      "medical_kits": 2500
+    }
+  },
+  {
+    "id": "WH-05",
+    "name": "Ambattur Industrial Logistics Depot",
+    "location": [13.0978, 80.1617],
+    "address": "CTH Road & Ambattur Industrial Estate",
+    "supplies": {
+      "water_litres": 180000,
+      "food_rations": 45000,
+      "medical_kits": 1800
+    }
+  }
+]

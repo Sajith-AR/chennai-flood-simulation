@@ -1,0 +1,110 @@
+[
+  {
+    "id": "SH-01",
+    "name": "Jawaharlal Nehru Stadium",
+    "neighborhood": "Periamet / Central",
+    "location": [13.0838, 80.2764],
+    "capacity": 5000,
+    "current_occupancy": 250,
+    "amenities": ["Medical Post", "Mass Kitchen", "Backup Gen", "Helipad Access", "Water Tankers"]
+  },
+  {
+    "id": "SH-02",
+    "name": "Anna University Campus (CEG)",
+    "neighborhood": "Guindy",
+    "location": [13.0125, 80.2355],
+    "capacity": 4000,
+    "current_occupancy": 180,
+    "amenities": ["Medical Center", "Elevated Ground", "Dining Halls", "Solar Generators"]
+  },
+  {
+    "id": "SH-03",
+    "name": "IIT Madras (Student Activity Ctr)",
+    "neighborhood": "Adyar / Guindy",
+    "location": [12.9915, 80.2337],
+    "capacity": 4500,
+    "current_occupancy": 120,
+    "amenities": ["Full Hospital", "Water Treatment", "Large Hall", "Kitchen"]
+  },
+  {
+    "id": "SH-04",
+    "name": "Loyola College",
+    "neighborhood": "Nungambakkam",
+    "location": [13.0645, 80.2338],
+    "capacity": 3000,
+    "current_occupancy": 300,
+    "amenities": ["Large Auditoriums", "First Aid Clinic", "Purified Water Wells"]
+  },
+  {
+    "id": "SH-05",
+    "name": "Chennai Trade Centre",
+    "neighborhood": "Nandambakkam",
+    "location": [13.0175, 80.1834],
+    "capacity": 4500,
+    "current_occupancy": 100,
+    "amenities": ["HVAC", "Enclosed Exhibition Halls", "Truck Logistics Bays"]
+  },
+  {
+    "id": "SH-06",
+    "name": "Madras Christian College (MCC)",
+    "neighborhood": "Tambaram",
+    "location": [12.9213, 80.1233],
+    "capacity": 3500,
+    "current_occupancy": 450,
+    "amenities": ["Elevated Dormitories", "Independent Wells", "Campus Infirmary"]
+  },
+  {
+    "id": "SH-07",
+    "name": "SDAT Nehru Indoor Stadium",
+    "neighborhood": "Park Town",
+    "location": [13.0847, 80.2778],
+    "capacity": 3200,
+    "current_occupancy": 200,
+    "amenities": ["Enclosed Stadium", "High Capacity Sanitation", "Generator Backup"]
+  },
+  {
+    "id": "SH-08",
+    "name": "Guru Nanak College",
+    "neighborhood": "Velachery",
+    "location": [12.9904, 80.2198],
+    "capacity": 2800,
+    "current_occupancy": 500,
+    "amenities": ["Indoor Sports Complex", "High Plinth Level", "Community Kitchen"]
+  },
+  {
+    "id": "SH-09",
+    "name": "YMCA College of Physical Education",
+    "neighborhood": "Nandanam",
+    "location": [13.0270, 80.2380],
+    "capacity": 2500,
+    "current_occupancy": 150,
+    "amenities": ["Gymnasium Halls", "Emergency Staging Ground", "First Aid"]
+  },
+  {
+    "id": "SH-10",
+    "name": "Pachaiyappa's College",
+    "neighborhood": "Chetpet / Shenoy Nagar",
+    "location": [13.0768, 80.2325],
+    "capacity": 2800,
+    "current_occupancy": 220,
+    "amenities": ["Metro Connectivity", "Large Hostels", "Clean Water Wells"]
+  },
+  {
+    "id": "SH-11",
+    "name": "Queen Mary's College",
+    "neighborhood": "Mylapore / Marina",
+    "location": [13.0450, 80.2810],
+    "capacity": 2200,
+    "current_occupancy": 180,
+    "amenities": ["Coastal High Ground", "Food Distribution Hub", "Basic Aid"]
+  },
+  {
+    "id": "SH-12",
+    "name": "Ethiraj College for Women",
+    "neighborhood": "Egmore",
+    "location": [13.0673, 80.2581],
+    "capacity": 2400,
+    "current_occupancy": 140,
+    "amenities": ["Auditorium", "Kitchen Facilities", "Dedicated First Aid Unit"]
+  }
+]

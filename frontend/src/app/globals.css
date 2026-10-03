@@ -1,0 +1,461 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #020617;
+    --foreground: #f8fafc;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   CUSTOM RANGE SLIDER STYLES
+   ═══════════════════════════════════════════════ */
+
+/* Base range reset */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+input[type='range']:hover {
+  opacity: 1;
+}
+
+/* Track */
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, rgba(51, 65, 85, 0.6), rgba(71, 85, 105, 0.4));
+}
+
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, rgba(51, 65, 85, 0.6), rgba(71, 85, 105, 0.4));
+}
+
+/* Thumb */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-top: -6px;
+  border: 2.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+input[type='range']::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+input[type='range']:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  transform: scale(1.2);
+}
+
+input[type='range']:active::-moz-range-thumb {
+  cursor: grabbing;
+  transform: scale(1.2);
+}
+
+/* Cyan slider */
+.slider-cyan::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #22d3ee, #06b6d4);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.slider-cyan::-moz-range-thumb {
+  background: linear-gradient(135deg, #22d3ee, #06b6d4);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Blue slider */
+.slider-blue::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.slider-blue::-moz-range-thumb {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Amber slider */
+.slider-amber::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.slider-amber::-moz-range-thumb {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Red slider */
+.slider-red::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.slider-red::-moz-range-thumb {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATION KEYFRAMES
+   ═══════════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(34, 211, 238, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.6); }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ═══════════════════════════════════════════════
+   GLASSMORPHISM & PANEL UTILITIES
+   ═══════════════════════════════════════════════ */
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.glass-panel-strong {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+}
+
+/* Gradient border effect */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow utilities */
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.15), 0 0 30px rgba(34, 211, 238, 0.05);
+}
+
+.glow-amber {
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.15), 0 0 30px rgba(251, 191, 36, 0.05);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.15), 0 0 30px rgba(52, 211, 153, 0.05);
+}
+
+.glow-red {
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.15), 0 0 30px rgba(248, 113, 113, 0.05);
+}
+
+/* ═══════════════════════════════════════════════
+   CUSTOM SCROLLBARS
+   ═══════════════════════════════════════════════ */
+
+/* Webkit (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.6);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.8);
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.6) rgba(15, 23, 42, 0.4);
+}
+
+/* ═══════════════════════════════════════════════
+   LEAFLET DARK THEME
+   ═══════════════════════════════════════════════ */
+
+.leaflet-container {
+  font-family: inherit;
+  background-color: #0a0f1a !important;
+}
+
+/* Dark popups */
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95) !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.3) !important;
+  padding: 0 !important;
+  backdrop-filter: blur(12px);
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.5 !important;
+  font-size: 12px;
+}
+
+.leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+  font-size: 20px !important;
+  padding: 6px 8px 0 0 !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #f1f5f9 !important;
+}
+
+/* Zoom controls */
+.leaflet-control-zoom {
+  border: 1px solid rgba(51, 65, 85, 0.5) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  color: #22d3ee !important;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4) !important;
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  font-size: 16px !important;
+  transition: all 0.15s ease !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: rgba(30, 41, 59, 0.95) !important;
+  color: #67e8f9 !important;
+}
+
+/* Attribution */
+.leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.8) !important;
+  color: #64748b !important;
+  font-size: 9px !important;
+  padding: 2px 8px !important;
+  backdrop-filter: blur(8px);
+  border-top-left-radius: 6px;
+}
+
+.leaflet-control-attribution a {
+  color: #22d3ee !important;
+}
+
+/* ═══════════════════════════════════════════════
+   CIRCULAR GAUGE STYLES
+   ═══════════════════════════════════════════════ */
+
+.gauge-ring {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gauge-bg {
+  stroke: rgba(51, 65, 85, 0.4);
+}
+
+/* ═══════════════════════════════════════════════
+   DRAWING MODE CURSOR
+   ═══════════════════════════════════════════════ */
+
+.drawing-mode-active .leaflet-container {
+  cursor: crosshair !important;
+}
+
+.drawing-mode-active .leaflet-control-container,
+.drawing-mode-active .leaflet-control-container * {
+  cursor: pointer !important;
+}
+
+/* ═══════════════════════════════════════════════
+   INTERACTIVE HOVER CARDS
+   ═══════════════════════════════════════════════ */
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════
+   ICON CONTAINER STYLES
+   ═══════════════════════════════════════════════ */
+
+/* Reset default Leaflet icon container styling */
+.warehouse-icon,
+.shelter-icon,
+.dp-icon,
+.helicopter-icon,
+.amphibious-icon,
+.epicenter-icon,
+.custom-leaflet-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ═══════════════════════════════════════════════
+   TACTICAL DISASTER SIMULATION ANIMATIONS
+   ═══════════════════════════════════════════════ */
+
+@keyframes spinRotor {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-rotor {
+  animation: spinRotor 0.25s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes shockwaveRipple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-shockwave {
+  animation: shockwaveRipple 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+@keyframes sirenFlash {
+  0%, 100% {
+    box-shadow: inset 0 0 40px rgba(239, 68, 68, 0.4), inset 0 0 100px rgba(220, 38, 38, 0.2);
+  }
+  50% {
+    box-shadow: inset 0 0 70px rgba(239, 68, 68, 0.7), inset 0 0 160px rgba(185, 28, 28, 0.4);
+  }
+}
+
+.siren-active-vignette {
+  animation: sirenFlash 0.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
