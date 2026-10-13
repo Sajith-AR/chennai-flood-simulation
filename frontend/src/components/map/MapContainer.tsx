@@ -9,6 +9,7 @@ import {
   ShelterEntity,
   WarehouseEntity,
   DistributionPointEntity,
+  PopulationClusterEntity,
   StagingBaseEntity,
   RouteInspectionData,
 } from '@/lib/types';
