@@ -28,6 +28,7 @@ venv/
 out/
 build/
 dist/
+*.tsbuildinfo
 
 # Logs
 logs

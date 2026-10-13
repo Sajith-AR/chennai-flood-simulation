@@ -11,6 +11,7 @@ import ResourcePanel from '@/components/dashboard/ResourcePanel';
 import AllocationModal from '@/components/dashboard/AllocationModal';
 import AIAdvisorPanel from '@/components/dashboard/AIAdvisorPanel';
 import RouteInspectorModal from '@/components/map/RouteInspectorModal';
+import ClassicDashboard from '@/components/classic/ClassicDashboard';
 
 import {
   Coordinates,
@@ -90,12 +91,16 @@ import {
   Anchor,
   ChevronRight,
   Info,
+  Building2,
 } from 'lucide-react';
 
 export type DashboardSection = 'map' | 'scenarios' | 'logistics' | 'ai-advisor' | 'analytics';
 
 export default function DashboardPage() {
-  // 0. Active Section State
+  // UI Mode: Classic Government Portal vs Tactical Defense HUD
+  const [uiMode, setUiMode] = useState<'classic' | 'tactical'>('classic');
+
+  // 0. Active Section State (for Tactical HUD mode)
   const [activeSection, setActiveSection] = useState<DashboardSection>('map');
 
   // 1. Core Map Entities & Boundaries
@@ -533,6 +538,83 @@ export default function DashboardPage() {
     { id: 'analytics', label: 'Operations Analytics', icon: Activity, tag: 'Fleet & KPIs' },
   ];
 
+  if (uiMode === 'classic') {
+    return (
+      <div className="flex flex-col min-h-screen lg:h-screen w-full overflow-hidden bg-slate-950 text-slate-100">
+        <ClassicDashboard
+          center={center}
+          bounds={bounds}
+          shelters={shelters}
+          warehouses={warehouses}
+          distributionPoints={distributionPoints}
+          populationClusters={populationClusters}
+          stagingBases={stagingBases}
+          currentStep={currentStep}
+          definedZones={definedZones}
+          activeDrawingMode={activeDrawingMode}
+          setActiveDrawingMode={setActiveDrawingMode}
+          circleRadiusMeters={circleRadiusMeters}
+          setCircleRadiusMeters={setCircleRadiusMeters}
+          draftPolygonPoints={draftPolygonPoints}
+          draftCircleCenter={draftCircleCenter}
+          onMapClick={handleMapClick}
+          onFinishPolygon={handleFinishPolygon}
+          onClearDrawing={handleClearDrawing}
+          visibleLayers={visibleLayers}
+          onToggleLayer={handleToggleLayer}
+          onSelectShelter={(id) => handleOpenAllocateModal(id, 'shelter')}
+          onSelectDistributionPoint={(id) => handleOpenAllocateModal(id, 'point')}
+          onSelectRoute={handleSelectRoute}
+          onOpenAllocateModal={handleOpenAllocateModal}
+          parameters={parameters}
+          onParametersChange={setParameters}
+          activePresetId={activePresetId}
+          onSelectPreset={handleSelectPreset}
+          onRunSimulation={handleRunSimulation}
+          isSimulating={isSimulating}
+          simulationResponse={simulationResponse}
+          currentStepIndex={currentStepIndex}
+          onStepChange={setCurrentStepIndex}
+          isPlaying={isPlaying}
+          onTogglePlay={() => setIsPlaying(!isPlaying)}
+          playbackSpeed={playbackSpeed}
+          onSpeedChange={setPlaybackSpeed}
+          liveInventory={liveInventory}
+          advisorData={advisorData}
+          isBackendLive={isBackendLive}
+          onTriggerSiren={handleToggleSiren}
+          isSirenActive={isSirenActive}
+          onTriggerAirlift={handleTriggerAirlift}
+          uiMode={uiMode}
+          onToggleUIMode={() => setUiMode('tactical')}
+        />
+
+        {/* Route Inspector HUD Modal */}
+        <RouteInspectorModal
+          isOpen={isRouteInspectorOpen}
+          onClose={() => setIsRouteInspectorOpen(false)}
+          route={inspectedRoute}
+          onReroute={handleReroute}
+          onUpgradeMode={handleUpgradeMode}
+        />
+
+        {/* Interactive Supply Allocation Modal */}
+        {allocateTarget && (
+          <AllocationModal
+            isOpen={isAllocateModalOpen}
+            onClose={() => setIsAllocateModalOpen(false)}
+            targetId={allocateTarget.id}
+            targetName={allocateTarget.name}
+            targetType={allocateTarget.type}
+            warehouses={warehouses}
+            inventory={liveInventory}
+            onConfirmAllocate={handleConfirmAllocate}
+          />
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`flex flex-col min-h-screen lg:h-screen w-full overflow-x-hidden bg-slate-950 text-slate-100 ${
@@ -685,6 +767,16 @@ export default function DashboardPage() {
                 <span>Simulate</span>
               </>
             )}
+          </button>
+
+          {/* Toggle to Classic Institutional Portal */}
+          <button
+            onClick={() => setUiMode('classic')}
+            className="px-2.5 py-1.5 rounded-lg bg-blue-950/80 hover:bg-blue-900 border border-blue-700/80 text-blue-200 flex items-center gap-1.5 font-sans text-xs font-semibold transition-all hover:scale-105"
+            title="Switch to GCC / TNSDMA Classic Government Portal"
+          >
+            <Building2 className="w-3.5 h-3.5 text-blue-300" />
+            <span className="hidden sm:inline">Classic Portal</span>
           </button>
         </div>
       </div>

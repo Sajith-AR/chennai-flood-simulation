@@ -147,6 +147,7 @@ def _run_simulation(req: SimulationRequest, request: Request):
             "time_elapsed_hours": t_hours,
             "hour": t_hours,
             "flood_polygons": step_data["flood_polygons"],
+            "zones_state": step_zones,
             "severed_roads_count": severed_count,
             "severed_road_segments_count": severed_count,
             "blocked_roads": severed_count,
@@ -303,7 +304,7 @@ def _run_simulation(req: SimulationRequest, request: Request):
     ai_advisory = None
     if ai_advisor:
         ai_advisory = ai_advisor.generate_comprehensive_advisory(
-            step_zones_state=last_step["zones_state"],
+            step_zones_state=last_step.get("zones_state", []),
             dynamic_graph=dynamic_graph,
             isolated_clusters=last_step["isolated_clusters"],
             shelter_allocations=last_step["shelter_allocations"],
