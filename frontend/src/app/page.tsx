@@ -488,6 +488,14 @@ export default function DashboardPage() {
     setIsAllocateModalOpen(true);
   };
 
+  const handleSelectShelter = (shelterId: string) => {
+    handleOpenAllocateModal(shelterId, 'shelter');
+  };
+
+  const handleSelectDistributionPoint = (pointId: string) => {
+    handleOpenAllocateModal(pointId, 'point');
+  };
+
   const handleConfirmAllocate = async (request: ResourceAllocateRequest) => {
     const res = await allocateResources(request);
     if (!res.success) throw new Error(res.message || 'Allocation failed.');
@@ -562,8 +570,8 @@ export default function DashboardPage() {
           onClearDrawing={handleClearDrawing}
           visibleLayers={visibleLayers}
           onToggleLayer={handleToggleLayer}
-          onSelectShelter={(id) => handleOpenAllocateModal(id, 'shelter')}
-          onSelectDistributionPoint={(id) => handleOpenAllocateModal(id, 'point')}
+          onSelectShelter={handleSelectShelter}
+          onSelectDistributionPoint={handleSelectDistributionPoint}
           onSelectRoute={handleSelectRoute}
           onOpenAllocateModal={handleOpenAllocateModal}
           parameters={parameters}
@@ -806,8 +814,8 @@ export default function DashboardPage() {
                 draftCircleCenter={draftCircleCenter}
                 onMapClick={handleMapClick}
                 visibleLayers={visibleLayers}
-                onSelectShelter={(id) => handleOpenAllocateModal(id, 'shelter')}
-                onSelectDistributionPoint={(id) => handleOpenAllocateModal(id, 'point')}
+                onSelectShelter={handleSelectShelter}
+                onSelectDistributionPoint={handleSelectDistributionPoint}
                 onSelectRoute={handleSelectRoute}
               />
             </div>
