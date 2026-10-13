@@ -11,6 +11,7 @@ import {
   Popup,
   Tooltip,
   useMapEvents,
+  useMap,
   CircleMarker,
 } from 'react-leaflet';
 import L from 'leaflet';
@@ -139,6 +140,35 @@ function MapClickHandler({
   });
   return null;
 }
+// Programmatic Fly-To Controller Component
+function MapFlyToHandler({
+  target,
+}: {
+  target?: { center: Coordinates; zoom?: number } | null;
+}) {
+  const map = useMap();
+  React.useEffect(() => {
+    if (target?.center) {
+      map.flyTo(target.center, target.zoom || 14, { duration: 1.2 });
+    }
+  }, [target, map]);
+  return null;
+}
+
+const BASEMAP_CONFIG = {
+  dark: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+  },
+  satellite: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+  },
+  streets: {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+  },
+};
 
 export default function ChennaiMap({
   center,
@@ -159,7 +189,9 @@ export default function ChennaiMap({
   onSelectShelter,
   onSelectDistributionPoint,
   onSelectRoute,
-  themeMode = 'light',
+  themeMode = 'dark',
+  basemapType = 'dark',
+  flyToLocation = null,
 }: ChennaiMapProps) {
   // Convert GeoJSON polygon coordinates ([lon, lat]) to Leaflet [lat, lon]
   const convertGeoJsonPolygon = (coords: number[][][]): [number, number][] => {
@@ -293,10 +325,17 @@ export default function ChennaiMap({
           activeDrawingMode={activeDrawingMode}
         />
 
-        {/* Official OpenStreetMap GIS Basemap (Clean, High Clarity, Zero Watermarks) */}
+        <MapFlyToHandler target={flyToLocation} />
+
+        {/* Dynamic Basemap Tile Provider (ESRI Dark Canvas / Satellite Recon / OSM Streets, 100% Watermark-Free) */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          key={basemapType || themeMode}
+          attribution={
+            (BASEMAP_CONFIG[basemapType] || BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark']).attribution
+          }
+          url={
+            (BASEMAP_CONFIG[basemapType] || BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark']).url
+          }
           maxZoom={19}
         />
 

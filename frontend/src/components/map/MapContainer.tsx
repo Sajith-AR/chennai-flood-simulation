@@ -42,6 +42,8 @@ export interface ChennaiMapProps {
   onSelectDistributionPoint?: (pointId: string) => void;
   onSelectRoute?: (route: RouteInspectionData) => void;
   themeMode?: 'light' | 'dark';
+  basemapType?: 'dark' | 'satellite' | 'streets';
+  flyToLocation?: { center: Coordinates; zoom?: number } | null;
 }
 
 const DynamicChennaiMap = dynamic<ChennaiMapProps>(
