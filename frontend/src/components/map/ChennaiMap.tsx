@@ -155,18 +155,59 @@ function MapFlyToHandler({
   return null;
 }
 
-const BASEMAP_CONFIG = {
+// Automatic Map Resizing & Canvas Invalidation Controller
+function MapResizeHandler() {
+  const map = useMap();
+  React.useEffect(() => {
+    // Invalidate size on initial mount and staggered intervals to eliminate blank squares & container offsets
+    map.invalidateSize();
+    const t1 = setTimeout(() => map.invalidateSize(), 100);
+    const t2 = setTimeout(() => map.invalidateSize(), 400);
+    const t3 = setTimeout(() => map.invalidateSize(), 1200);
+
+    const onResize = () => {
+      map.invalidateSize();
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [map]);
+  return null;
+}
+
+interface BasemapSpec {
+  url: string;
+  attribution: string;
+  subdomains?: string;
+  maxZoom: number;
+  maxNativeZoom?: number;
+}
+
+const BASEMAP_CONFIG: Record<'dark' | 'satellite' | 'streets', BasemapSpec> = {
   dark: {
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 20,
+    maxNativeZoom: 19,
   },
   satellite: {
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+    subdomains: '',
+    maxZoom: 20,
+    maxNativeZoom: 18,
   },
   streets: {
-    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 20,
+    maxNativeZoom: 19,
   },
 };
 
@@ -311,15 +352,18 @@ export default function ChennaiMap({
         minZoom={10}
         maxZoom={18}
         maxBounds={[
-          [12.75, 80.0],
-          [13.35, 80.45],
+          [12.70, 79.95],
+          [13.40, 80.50],
         ]}
         style={{
           width: '100%',
           height: '100%',
-          backgroundColor: themeMode === 'dark' ? '#0a0f1a' : '#f8fafc',
+          backgroundColor: themeMode === 'dark' ? '#070b14' : '#f8fafc',
         }}
       >
+        {/* Automatic Viewport Invalidation to prevent blank tiles */}
+        <MapResizeHandler />
+
         <MapClickHandler
           onMapClick={onMapClick}
           activeDrawingMode={activeDrawingMode}
@@ -327,17 +371,22 @@ export default function ChennaiMap({
 
         <MapFlyToHandler target={flyToLocation} />
 
-        {/* Dynamic Basemap Tile Provider (ESRI Dark Canvas / Satellite Recon / OSM Streets, 100% Watermark-Free) */}
-        <TileLayer
-          key={basemapType || themeMode}
-          attribution={
-            (BASEMAP_CONFIG[basemapType] || BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark']).attribution
-          }
-          url={
-            (BASEMAP_CONFIG[basemapType] || BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark']).url
-          }
-          maxZoom={19}
-        />
+        {/* Dynamic Basemap Tile Provider (CartoDB Dark Matter / Satellite Recon / Voyager Streets) */}
+        {(() => {
+          const activeBasemap =
+            BASEMAP_CONFIG[basemapType] ||
+            BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark'];
+          return (
+            <TileLayer
+              key={`${basemapType}-${themeMode}`}
+              attribution={activeBasemap.attribution}
+              url={activeBasemap.url}
+              subdomains={activeBasemap.subdomains || 'abc'}
+              maxZoom={activeBasemap.maxZoom || 20}
+              maxNativeZoom={activeBasemap.maxNativeZoom || 18}
+            />
+          );
+        })()}
 
         {/* 1. Population Density Heatmap Layer */}
         {visibleLayers.populationHeatmap &&

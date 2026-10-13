@@ -280,16 +280,42 @@ input[type='range']:active::-moz-range-thumb {
 }
 
 /* ═══════════════════════════════════════════════
-   LEAFLET MAP & POPUP THEME (Light by Default, Dark on .dark)
+   LEAFLET MAP & POPUP THEME
    ═══════════════════════════════════════════════ */
 
+/* Leaflet Container - Dark Midnight Obsidian default */
 .leaflet-container {
   font-family: inherit;
+  background-color: #070b14 !important;
+  outline: none;
+}
+
+/* Explicit Sentinel Command Mode */
+.sentinel-map,
+.sentinel-map .leaflet-container,
+.dark .leaflet-container {
+  background-color: #070b14 !important;
+}
+
+/* Classic Portal Mode (Clean Slate) */
+.classic-map .leaflet-container {
   background-color: #f8fafc !important;
 }
 
-.dark .leaflet-container {
-  background-color: #0a0f1a !important;
+/* Prevent white flashing or checkerboarding while tiles are loading */
+.leaflet-pane,
+.leaflet-tile-pane,
+.leaflet-layer,
+.leaflet-tile-container {
+  background-color: transparent !important;
+}
+
+.sentinel-map .leaflet-tile {
+  background-color: #070b14 !important;
+}
+
+.classic-map .leaflet-tile {
+  background-color: #f8fafc !important;
 }
 
 /* Light Popups (Default) */

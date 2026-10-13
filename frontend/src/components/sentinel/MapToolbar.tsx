@@ -127,9 +127,9 @@ export default function MapToolbar({
           {isBasemapOpen && (
             <div className="absolute top-full left-0 mt-1.5 w-48 rounded-xl bg-[#080d1a]/95 backdrop-blur-md border border-cyan-500/30 p-1.5 shadow-2xl z-30 font-mono text-xs space-y-1">
               {[
-                { id: 'dark', label: 'Sentinel Dark', desc: 'ESRI Dark Gray Canvas' },
-                { id: 'satellite', label: 'Satellite Recon', desc: 'ESRI World Imagery' },
-                { id: 'streets', label: 'Vector Street', desc: 'OpenStreetMap Carto' },
+                { id: 'dark', label: 'Sentinel Dark', desc: 'CartoDB Dark Matter (High Res)' },
+                { id: 'satellite', label: 'Satellite Recon', desc: 'ESRI World Ortho Imagery' },
+                { id: 'streets', label: 'Vector Street', desc: 'CartoDB Voyager Vector' },
               ].map((map) => (
                 <button
                   key={map.id}
