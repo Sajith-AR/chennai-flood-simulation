@@ -116,7 +116,7 @@ export default function ContextualIntelligencePanel({
   const isEntitySelected = Boolean(selectedEntity && selectedEntity.data);
 
   return (
-    <aside className="w-full md:w-[420px] xl:w-[460px] bg-[#070b14]/95 backdrop-blur-md border-l border-cyan-500/20 flex flex-col h-full z-20 shadow-[-8px_0_32px_rgba(0,0,0,0.6)] font-sans">
+    <aside className="fixed md:relative inset-y-0 right-0 z-40 md:z-20 w-full sm:w-[380px] md:w-[420px] xl:w-[460px] bg-[#070b14]/95 backdrop-blur-md border-l border-cyan-500/20 flex flex-col h-full shadow-[-8px_0_32px_rgba(0,0,0,0.6)] font-sans transition-all duration-300">
       {/* Panel Top Title Bar */}
       <div className="h-12 border-b border-slate-800/80 px-4 flex items-center justify-between bg-[#05080f]/90 flex-shrink-0">
         <div className="flex items-center gap-2">

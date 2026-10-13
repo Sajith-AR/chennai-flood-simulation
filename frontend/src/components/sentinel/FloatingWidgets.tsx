@@ -94,7 +94,7 @@ export default function FloatingWidgets({
       {/* ========================================================================= */}
       {/* WIDGET 1 (Top Left): LIVE THREAT INDEX                                    */}
       {/* ========================================================================= */}
-      <div className="absolute top-14 left-3 z-20 w-64 pointer-events-auto">
+      <div className="absolute top-14 left-3 z-20 w-60 sm:w-64 pointer-events-auto">
         <div className="bg-[#080d1a]/90 backdrop-blur-md border border-cyan-500/25 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all">
           {/* Header */}
           <div className="px-3 py-2 bg-slate-900/60 border-b border-slate-800/80 flex items-center justify-between">
@@ -158,7 +158,7 @@ export default function FloatingWidgets({
       {/* ========================================================================= */}
       {/* WIDGET 2 (Top Right): FLOOD IMPACT                                        */}
       {/* ========================================================================= */}
-      <div className="absolute top-22 right-3 z-20 w-64 pointer-events-auto">
+      <div className="absolute top-14 sm:top-20 right-3 z-20 w-60 sm:w-64 pointer-events-auto hidden sm:block">
         <div className="bg-[#080d1a]/90 backdrop-blur-md border border-cyan-500/25 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all">
           {/* Header */}
           <div className="px-3 py-2 bg-slate-900/60 border-b border-slate-800/80 flex items-center justify-between">
@@ -204,7 +204,7 @@ export default function FloatingWidgets({
       {/* ========================================================================= */}
       {/* WIDGET 3 (Bottom Left): RESPONSE READINESS                                */}
       {/* ========================================================================= */}
-      <div className="absolute bottom-24 left-3 z-20 w-64 pointer-events-auto">
+      <div className="absolute bottom-24 left-3 z-20 w-60 sm:w-64 pointer-events-auto hidden md:block">
         <div className="bg-[#080d1a]/90 backdrop-blur-md border border-cyan-500/25 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all">
           {/* Header */}
           <div className="px-3 py-2 bg-slate-900/60 border-b border-slate-800/80 flex items-center justify-between">
@@ -259,7 +259,7 @@ export default function FloatingWidgets({
       {/* ========================================================================= */}
       {/* WIDGET 4 (Bottom Right): MOBILITY INTELLIGENCE                            */}
       {/* ========================================================================= */}
-      <div className="absolute bottom-24 right-3 z-20 w-64 pointer-events-auto">
+      <div className="absolute bottom-24 right-3 z-20 w-60 sm:w-64 pointer-events-auto hidden md:block">
         <div className="bg-[#080d1a]/90 backdrop-blur-md border border-cyan-500/25 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all">
           {/* Header */}
           <div className="px-3 py-2 bg-slate-900/60 border-b border-slate-800/80 flex items-center justify-between">

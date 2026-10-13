@@ -514,3 +514,33 @@ input[type='range']:active::-moz-range-thumb {
   pointer-events: none;
 }
 
+/* ═══════════════════════════════════════════════
+   SENTINEL COMMAND OS POPUPS & REDUCED MOTION
+   ═══════════════════════════════════════════════ */
+
+.sentinel-map .leaflet-popup-content-wrapper {
+  background: rgba(7, 11, 20, 0.96) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 14px !important;
+}
+
+.sentinel-map .leaflet-popup-tip {
+  background: rgba(7, 11, 20, 0.96) !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+

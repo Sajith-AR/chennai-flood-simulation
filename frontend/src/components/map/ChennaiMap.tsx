@@ -304,7 +304,7 @@ export default function ChennaiMap({
   };
 
   return (
-    <div className="w-full h-full relative z-0">
+    <div className={`w-full h-full relative z-0 ${themeMode === 'dark' ? 'sentinel-map' : 'classic-map'}`}>
       <LeafletMap
         center={center}
         zoom={12}
