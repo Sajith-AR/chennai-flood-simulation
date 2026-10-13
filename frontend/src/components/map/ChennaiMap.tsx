@@ -159,6 +159,7 @@ export default function ChennaiMap({
   onSelectShelter,
   onSelectDistributionPoint,
   onSelectRoute,
+  themeMode = 'light',
 }: ChennaiMapProps) {
   // Convert GeoJSON polygon coordinates ([lon, lat]) to Leaflet [lat, lon]
   const convertGeoJsonPolygon = (coords: number[][][]): [number, number][] => {
@@ -281,18 +282,21 @@ export default function ChennaiMap({
           [12.75, 80.0],
           [13.35, 80.45],
         ]}
-        style={{ width: '100%', height: '100%', backgroundColor: '#020617' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: themeMode === 'dark' ? '#0a0f1a' : '#f8fafc',
+        }}
       >
         <MapClickHandler
           onMapClick={onMapClick}
           activeDrawingMode={activeDrawingMode}
         />
 
-        {/* High-Contrast Aerospace Dark Basemap */}
+        {/* Official OpenStreetMap GIS Basemap (Clean, High Clarity, Zero Watermarks) */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          subdomains={['a', 'b', 'c', 'd']}
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           maxZoom={19}
         />
 
@@ -323,32 +327,32 @@ export default function ChennaiMap({
                   dashArray: '3, 6',
                 }}
               >
-                <Popup className="dark-popup">
-                  <div className="p-2.5 text-xs font-sans text-slate-200">
-                    <div className="font-bold text-sm text-slate-100 flex items-center gap-1.5">
+                <Popup>
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200">
+                    <div className="font-bold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
                       <span
                         className="w-2.5 h-2.5 rounded-full inline-block"
                         style={{ backgroundColor: color }}
                       />
                       {cluster.name}
                     </div>
-                    <div className="mt-1 text-slate-400 font-mono text-[10px]">
+                    <div className="mt-1 text-slate-500 dark:text-slate-400 font-mono text-[10px]">
                       Ward Population Risk Cluster
                     </div>
-                    <div className="mt-2 grid grid-cols-2 gap-1.5 pt-1.5 border-t border-slate-700">
+                    <div className="mt-2 grid grid-cols-2 gap-1.5 pt-1.5 border-t border-slate-200 dark:border-slate-700">
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase block">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase block">
                           Population
                         </span>
-                        <span className="font-mono font-semibold text-slate-100">
+                        <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
                           {estPop.toLocaleString()}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase block">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase block">
                           Density
                         </span>
-                        <span className="font-mono font-semibold text-slate-100">
+                        <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
                           {density.toLocaleString()} /km²
                         </span>
                       </div>
@@ -357,10 +361,10 @@ export default function ChennaiMap({
                       <span
                         className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase tracking-wider ${
                           riskLevel === 'extreme'
-                            ? 'bg-red-950 text-red-300 border border-red-700'
+                            ? 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-700'
                             : riskLevel === 'high'
-                            ? 'bg-orange-950 text-orange-300 border border-orange-700'
-                            : 'bg-yellow-950 text-yellow-300 border border-yellow-700'
+                            ? 'bg-orange-50 text-orange-700 border border-orange-200 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-700'
+                            : 'bg-yellow-50 text-yellow-700 border border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300 dark:border-yellow-700'
                         }`}
                       >
                         {riskLevel} Threat Zone
@@ -393,13 +397,13 @@ export default function ChennaiMap({
                 icon={createEpicenterIcon(2.2, zone.name || 'Epicenter')}
               >
                 <Popup>
-                  <div className="p-2 text-xs font-sans text-slate-200">
-                    <span className="font-mono text-[10px] text-red-400 font-bold block uppercase">
+                  <div className="p-2.5 text-xs font-sans text-slate-800 dark:text-slate-200">
+                    <span className="font-mono text-[10px] text-red-600 dark:text-red-400 font-bold block uppercase">
                       Flood Epicenter
                     </span>
-                    <div className="font-bold text-sm text-slate-100 mt-0.5">{zone.name}</div>
-                    <div className="mt-1 text-[11px] text-slate-300">
-                      Radius: <b>{((zone.radius_meters || 2000) / 1000).toFixed(1)} km</b>
+                    <div className="font-bold text-sm text-slate-900 dark:text-slate-100 mt-0.5">{zone.name}</div>
+                    <div className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      Radius: <b className="text-slate-900 dark:text-slate-100">{((zone.radius_meters || 2000) / 1000).toFixed(1)} km</b>
                     </div>
                   </div>
                 </Popup>
@@ -423,11 +427,11 @@ export default function ChennaiMap({
                   icon={createEpicenterIcon(2.4, zone.name || 'Surge Basin')}
                 >
                   <Popup>
-                    <div className="p-2 text-xs font-sans text-slate-200">
-                      <span className="font-mono text-[10px] text-red-400 font-bold block uppercase">
+                    <div className="p-2.5 text-xs font-sans text-slate-800 dark:text-slate-200">
+                      <span className="font-mono text-[10px] text-red-600 dark:text-red-400 font-bold block uppercase">
                         Hydrological Basin Center
                       </span>
-                      <div className="font-bold text-sm text-slate-100 mt-0.5">{zone.name}</div>
+                      <div className="font-bold text-sm text-slate-900 dark:text-slate-100 mt-0.5">{zone.name}</div>
                     </div>
                   </Popup>
                 </Marker>
@@ -497,37 +501,37 @@ export default function ChennaiMap({
                 }}
               >
                 <Popup>
-                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[200px]">
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200 min-w-[210px]">
                     <div className="flex items-center gap-2">
                       <span
-                        className="w-3 h-3 rounded-full"
+                        className="w-3 h-3 rounded-full shadow-sm"
                         style={{ backgroundColor: props.fill_color }}
                       />
-                      <span className="font-bold text-sm text-slate-100">
+                      <span className="font-bold text-sm text-slate-900 dark:text-slate-100">
                         Inundation Zone: {props.zone_id}
                       </span>
                     </div>
                     <div className="mt-2.5 grid grid-cols-2 gap-2 text-xs">
-                      <div className="bg-slate-900/80 p-2 rounded-lg border border-slate-700">
-                        <span className="text-[10px] text-slate-400 block uppercase font-mono">
+                      <div className="bg-slate-50 dark:bg-slate-900/80 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block uppercase font-mono">
                           Water Depth
                         </span>
-                        <span className="font-bold font-mono text-cyan-400 text-sm">
+                        <span className="font-bold font-mono text-blue-600 dark:text-cyan-400 text-sm">
                           {props.water_depth_m} m
                         </span>
                       </div>
-                      <div className="bg-slate-900/80 p-2 rounded-lg border border-slate-700">
-                        <span className="text-[10px] text-slate-400 block uppercase font-mono">
+                      <div className="bg-slate-50 dark:bg-slate-900/80 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block uppercase font-mono">
                           Severity Tier
                         </span>
-                        <span className="font-bold uppercase text-red-400 text-xs">
+                        <span className="font-bold uppercase text-red-600 dark:text-red-400 text-xs">
                           {props.severity}
                         </span>
                       </div>
                     </div>
                     {props.area_sq_km && (
-                      <div className="mt-2 text-[11px] text-slate-400 font-mono">
-                        Surface Spread: <b className="text-slate-100">{props.area_sq_km} km²</b>
+                      <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-400 font-mono">
+                        Surface Spread: <b className="text-slate-900 dark:text-slate-100">{props.area_sq_km} km²</b>
                       </div>
                     )}
                   </div>
@@ -674,27 +678,27 @@ export default function ChennaiMap({
               <Popup>
                 <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[240px]">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-sm text-slate-100">{base.name}</span>
-                    <span className="text-[9px] font-mono font-bold bg-slate-800 px-1.5 py-0.5 rounded text-cyan-300 border border-cyan-800">
+                    <span className="font-bold text-sm text-slate-900 dark:text-slate-100">{base.name}</span>
+                    <span className="text-[9px] font-mono font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-blue-700 dark:text-cyan-300 border border-slate-300 dark:border-cyan-800">
                       {base.callsign}
                     </span>
                   </div>
-                  <div className="text-[11px] text-slate-400 mt-0.5 font-mono">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 font-mono">
                     {isHelicopter ? 'IAF / Coast Guard Air Base' : 'Marine Amphibious Staging Base'}
                   </div>
 
-                  <div className="mt-2.5 bg-slate-900/80 p-2 rounded-lg border border-slate-700 space-y-1 font-mono text-xs">
+                  <div className="mt-2.5 bg-slate-50 dark:bg-slate-900/80 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1 font-mono text-xs">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Deployed Assets:</span>
-                      <span className="text-slate-100 font-semibold">{base.stationed_assets}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Deployed Assets:</span>
+                      <span className="text-slate-900 dark:text-slate-100 font-semibold">{base.stationed_assets}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Combat Radius:</span>
-                      <span className="text-cyan-400 font-semibold">{base.operational_radius_km} km</span>
+                      <span className="text-slate-500 dark:text-slate-400">Combat Radius:</span>
+                      <span className="text-blue-600 dark:text-cyan-400 font-semibold">{base.operational_radius_km} km</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Readiness:</span>
-                      <span className="text-emerald-400 font-bold uppercase">{base.readiness_status}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Readiness:</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase">{base.readiness_status}</span>
                     </div>
                   </div>
                 </div>
@@ -708,14 +712,14 @@ export default function ChennaiMap({
           warehouses.map((wh) => {
             const iconHtml = `
               <div class="relative group cursor-pointer">
-                <div class="w-8 h-8 rounded-lg bg-blue-600 border-2 border-white shadow-lg flex items-center justify-center text-white transform hover:scale-110 transition-transform">
+                <div class="w-8 h-8 rounded-lg bg-blue-600 border-2 border-white shadow-md flex items-center justify-center text-white transform hover:scale-110 transition-transform">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/>
                     <path d="M6 18h12"/>
                     <path d="M6 14h12"/>
                   </svg>
                 </div>
-                <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-cyan-400 border-2 border-white"></div>
+                <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-teal-400 border-2 border-white"></div>
               </div>
             `;
             const icon = createDivIcon(iconHtml, 'warehouse-icon', [32, 32], [16, 16]);
@@ -723,31 +727,31 @@ export default function ChennaiMap({
             return (
               <Marker key={`wh-${wh.id}`} position={wh.location} icon={icon}>
                 <Popup>
-                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[220px]">
-                    <div className="flex items-center gap-1.5 font-bold text-sm text-slate-100">
-                      <span>🏛️ {wh.name}</span>
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200 min-w-[230px]">
+                    <div className="flex items-center gap-1.5 font-bold text-sm text-slate-900 dark:text-slate-100">
+                      <span>{wh.name}</span>
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">{wh.address}</div>
-                    <div className="mt-2 bg-slate-900/80 p-2 rounded-lg border border-slate-700">
-                      <div className="text-[10px] font-bold text-blue-400 uppercase tracking-wider mb-1 font-mono">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{wh.address}</div>
+                    <div className="mt-2.5 bg-slate-50 dark:bg-slate-900/80 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1.5 font-mono">
                         Depot Stock Reserves
                       </div>
-                      <div className="space-y-1 text-xs font-mono">
+                      <div className="space-y-1.5 text-xs font-mono">
                         <div className="flex justify-between">
-                          <span className="text-slate-400">💧 Potable Water:</span>
-                          <span className="font-bold text-slate-100">
+                          <span className="text-slate-500 dark:text-slate-400">Potable Water:</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
                             {(wh.supplies?.water_litres ?? 0).toLocaleString()} L
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-400">🍞 Food Rations:</span>
-                          <span className="font-bold text-slate-100">
+                          <span className="text-slate-500 dark:text-slate-400">Food Rations:</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
                             {(wh.supplies?.food_rations ?? 0).toLocaleString()} pk
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-400">🩹 Medical Kits:</span>
-                          <span className="font-bold text-slate-100">
+                          <span className="text-slate-500 dark:text-slate-400">Medical Kits:</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
                             {(wh.supplies?.medical_kits ?? 0).toLocaleString()}
                           </span>
                         </div>
@@ -803,30 +807,30 @@ export default function ChennaiMap({
                 }}
               >
                 <Popup>
-                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[240px]">
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200 min-w-[240px]">
                     <div className="flex items-start justify-between gap-1">
                       <div>
-                        <div className="font-bold text-sm text-slate-100 leading-tight">
+                        <div className="font-bold text-sm text-slate-900 dark:text-slate-100 leading-tight">
                           {shelter.name}
                         </div>
-                        <div className="text-[11px] text-slate-400 font-medium">
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                           {shelter.neighborhood}
                         </div>
                       </div>
-                      <span className="text-[10px] font-mono font-bold bg-slate-800 px-1.5 py-0.5 rounded text-slate-100 border border-slate-700">
+                      <span className="text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
                         {shelter.id}
                       </span>
                     </div>
 
                     {/* Capacity Progress Bar */}
-                    <div className="mt-2.5 bg-slate-900/80 p-2 rounded-lg border border-slate-700">
-                      <div className="flex justify-between items-center text-xs mb-1 font-mono">
-                        <span className="text-slate-400 font-medium">Occupancy</span>
-                        <span className="font-bold text-slate-100">
+                    <div className="mt-2.5 bg-slate-50 dark:bg-slate-900/80 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <div className="flex justify-between items-center text-xs mb-1.5 font-mono">
+                        <span className="text-slate-500 dark:text-slate-400 font-medium">Occupancy</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">
                           {totalAssigned.toLocaleString()} / {(shelter.capacity ?? 0).toLocaleString()}
                         </span>
                       </div>
-                      <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                      <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                         <div
                           className={`h-full transition-all duration-500 ${
                             occupancyPct >= 95
@@ -838,9 +842,9 @@ export default function ChennaiMap({
                           style={{ width: `${occupancyPct}%` }}
                         />
                       </div>
-                      <div className="flex justify-between text-[10px] font-mono text-slate-400 mt-1">
-                        <span>Slots Available: <span className="text-slate-100">{Math.max(0, (shelter.capacity ?? 0) - totalAssigned).toLocaleString()}</span></span>
-                        <span className="font-bold text-slate-100">{occupancyPct}% Full</span>
+                      <div className="flex justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1.5">
+                        <span>Slots: <span className="text-slate-900 dark:text-slate-100 font-semibold">{Math.max(0, (shelter.capacity ?? 0) - totalAssigned).toLocaleString()}</span></span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">{occupancyPct}% Full</span>
                       </div>
                     </div>
 
@@ -850,7 +854,7 @@ export default function ChennaiMap({
                         {shelter.amenities.map((amenity, i) => (
                           <span
                             key={i}
-                            className="text-[9px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700"
+                            className="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700"
                           >
                             ✓ {amenity}
                           </span>
@@ -892,30 +896,30 @@ export default function ChennaiMap({
                 }}
               >
                 <Popup>
-                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[220px]">
-                    <div className="font-bold text-sm text-slate-100 flex items-center gap-1">
-                      <span>🏕️ {dp.name}</span>
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200 min-w-[220px]">
+                    <div className="font-bold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                      <span>{dp.name}</span>
                     </div>
-                    <div className="text-[11px] text-slate-400 font-mono">{dp.target_ward}</div>
-                    <div className="mt-2 bg-slate-900/80 p-2 rounded-lg border border-slate-700 text-xs font-mono space-y-1">
-                      <div className="text-[10px] font-bold text-amber-400 uppercase">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">{dp.target_ward}</div>
+                    <div className="mt-2.5 bg-slate-50 dark:bg-slate-900/80 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-mono space-y-1">
+                      <div className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase">
                         Relief Demand & Stock
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-400">💧 Water Needed:</span>
-                        <span className="font-bold text-slate-100">
+                        <span className="text-slate-500 dark:text-slate-400">Water Needed:</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">
                           {(dp.demand?.water_litres ?? 0).toLocaleString()} L
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-400">🍞 Food Rations:</span>
-                        <span className="font-bold text-slate-100">
+                        <span className="text-slate-500 dark:text-slate-400">Food Rations:</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">
                           {(dp.demand?.food_rations ?? 0).toLocaleString()} pk
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-400">🩹 Medical Kits:</span>
-                        <span className="font-bold text-slate-100">{dp.demand?.medical_kits ?? 0}</span>
+                        <span className="text-slate-500 dark:text-slate-400">Medical Kits:</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">{dp.demand?.medical_kits ?? 0}</span>
                       </div>
                     </div>
                   </div>

@@ -41,6 +41,7 @@ export interface ChennaiMapProps {
   onSelectShelter?: (shelterId: string) => void;
   onSelectDistributionPoint?: (pointId: string) => void;
   onSelectRoute?: (route: RouteInspectionData) => void;
+  themeMode?: 'light' | 'dark';
 }
 
 const DynamicChennaiMap = dynamic<ChennaiMapProps>(
