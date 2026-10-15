@@ -358,3 +358,220 @@ export interface AIAdvisorData {
   }[];
 }
 
+export interface DisasterIncident {
+  id: string;
+  title: string;
+  location: string;
+  zone: string;
+  coordinates: Coordinates;
+  disaster_type: string;
+  water_depth_m: number;
+  affected_population: number;
+  urgency: 'critical' | 'high' | 'medium' | 'low';
+  status: 'reported' | 'verified' | 'allocated' | 'dispatched' | 'resolved';
+  reported_at: string;
+  description: string;
+  demands: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets?: number;
+    rescue_boats?: number;
+  };
+  road_accessible: boolean;
+  allocated_depot?: string | null;
+  allocated_resources?: Record<string, number> | null;
+}
+
+export interface NLPExtractionResult {
+  location: string;
+  zone: string;
+  coordinates: Coordinates;
+  disaster_type: string;
+  water_depth_m: number;
+  affected_population: number;
+  urgency: 'critical' | 'high' | 'medium' | 'low';
+  demands: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets: number;
+    rescue_boats: number;
+  };
+  confidence_score: number;
+  extracted_entities: {
+    entity: string;
+    text: string;
+    start?: number;
+    end?: number;
+    canonical?: string;
+    value?: any;
+    level?: string;
+  }[];
+  explanation: string;
+  road_accessible: boolean;
+}
+
+export interface DemandForecastResult {
+  forecast_period_hours: number;
+  population_baseline: number;
+  method: string;
+  is_ai_prediction: boolean;
+  model_details: string;
+  demands: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets: number;
+    rescue_boats: number;
+  };
+  available_stock: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets: number;
+    rescue_boats: number;
+  };
+  projected_shortage: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets: number;
+    rescue_boats: number;
+  };
+  hourly_timeline: {
+    hour: string;
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+    blankets: number;
+    burn_rate_pct: number;
+  }[];
+  feature_importance: {
+    factor: string;
+    importance_pct: number;
+    direction: string;
+  }[];
+}
+
+export interface VulnerabilityRanking {
+  id: string;
+  name: string;
+  incident_id?: string;
+  zone?: string;
+  disaster_type?: string;
+  priority_score: number;
+  priority_tier: 'Critical' | 'High' | 'Medium' | 'Low';
+  badge_color: string;
+  affected_population: number;
+  urgency: string;
+  water_depth_m: number;
+  road_accessible: boolean;
+  coordinates: Coordinates;
+  demands?: Record<string, number>;
+  factor_breakdown: {
+    factor: string;
+    raw_value: string;
+    normalized_score: number;
+    weight_pct: number;
+    contribution: number;
+  }[];
+  explainable_rationale: string;
+}
+
+export interface AllocationPlan {
+  status: string;
+  solver_method: string;
+  objective_value?: number;
+  allocations_count: number;
+  allocations: {
+    allocation_id: string;
+    source_warehouse_id: string;
+    source_warehouse_name: string;
+    destination_incident_id: string;
+    destination_name: string;
+    destination_coordinates: Coordinates;
+    source_coordinates: Coordinates;
+    distance_km: number;
+    estimated_transit_min: number;
+    transport_mode: 'truck' | 'amphibious' | 'helicopter';
+    vehicle_type: string;
+    allocated_supplies: Record<string, number>;
+    rationale: string;
+  }[];
+  unmet_demands: {
+    incident_id: string;
+    location: string;
+    unmet_resources: Record<string, number>;
+    reason: string;
+  }[];
+  remaining_stocks: {
+    id: string;
+    name: string;
+    location: Coordinates;
+    available: Record<string, number>;
+  }[];
+  summary: string;
+}
+
+export interface OptimizedRouteResult {
+  route_id: string;
+  source_name: string;
+  destination_name: string;
+  distance_km: number;
+  travel_time_min: number;
+  transport_mode: 'truck' | 'amphibious' | 'helicopter';
+  vehicle_type: string;
+  node_count: number;
+  geojson: any;
+  waypoints: string[];
+  bypassed_hazards: string[];
+  is_ground_accessible: boolean;
+}
+
+export interface PipelineRunResult {
+  status: string;
+  workflow: string;
+  pipeline_stages_completed: number;
+  results: {
+    step1_incident: DisasterIncident;
+    step2_nlp_extraction: NLPExtractionResult;
+    step3_demand_forecast: DemandForecastResult;
+    step4_vulnerability_score: VulnerabilityRanking;
+    step5_resource_allocation: AllocationPlan;
+    step6_route_optimization: OptimizedRouteResult;
+    step7_alert_broadcast: {
+      alert_id: string;
+      channel: string;
+      english_script: string;
+      tamil_script: string;
+      dispatch_status: string;
+      target_audience: string;
+    };
+  };
+}
+
+export interface DashboardStats {
+  status: string;
+  incidents_count: number;
+  critical_incidents_count: number;
+  total_affected_population: number;
+  safe_shelters_count: number;
+  active_depots_count: number;
+  available_inventory: {
+    water_litres: number;
+    food_rations: number;
+    medical_kits: number;
+  };
+  road_network: {
+    total_nodes: number;
+    total_edges: number;
+    severed_roads_count: number;
+    active_routes_count: number;
+  };
+  active_field_teams: number;
+  system_status: string;
+  defcon_level: string;
+}
+
+

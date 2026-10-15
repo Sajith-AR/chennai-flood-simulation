@@ -9,6 +9,8 @@ import TimelineDock from './TimelineDock';
 import ContextualIntelligencePanel from './ContextualIntelligencePanel';
 import MapContainer from '@/components/map/MapContainer';
 import ConfirmationModal from '@/components/classic/ConfirmationModal';
+import CrisisIntelligencePipeline from './CrisisIntelligencePipeline';
+import { getIncidents } from '@/lib/api';
 import {
   Coordinates,
   DisasterParameters,
@@ -24,9 +26,10 @@ import {
   InventoryStatus,
   RouteInspectionData,
   AIAdvisorData,
+  DisasterIncident,
 } from '@/lib/types';
 import { CHENNAI_CENTER } from '@/lib/constants';
-import { Radio, Plane, CheckCircle2 } from 'lucide-react';
+import { Radio, Plane, CheckCircle2, Cpu, Compass } from 'lucide-react';
 
 interface SentinelCommandCenterProps {
   center: Coordinates;
@@ -188,11 +191,27 @@ export default function SentinelCommandCenter({
     [onSelectRoute]
   );
 
+  // Active Incidents State (NLP & Emergency Feed)
+  const [incidents, setIncidents] = useState<DisasterIncident[]>([]);
+
+  // Load Incidents from Crisis API
+  React.useEffect(() => {
+    let isMounted = true;
+    getIncidents().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setIncidents(data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [activeTool]);
+
   // Rail tool selection handler
   const handleSelectTool = (tool: SentinelTool) => {
     setActiveTool(tool);
-    if (tool === 'map') {
-      // Focus map: close right panel and clear selection
+    if (tool === 'map' || tool === 'pipeline') {
+      // Focus workspace: close right panel and clear selection
       setSelectedEntity(null);
       setIsRightPanelOpen(false);
     } else {
@@ -269,6 +288,7 @@ export default function SentinelCommandCenter({
         onTriggerAirlift={() => setConfirmAirliftOpen(true)}
         onToggleClassicMode={onToggleUIMode}
         isSimulating={isSimulating}
+        onOpenPipeline={() => handleSelectTool('pipeline')}
       />
 
       {/* Emergency Active Siren Klaxon Banner */}
@@ -312,98 +332,133 @@ export default function SentinelCommandCenter({
           teamsCount={stagingBases.length}
         />
 
-        {/* Zone B: Main Geospatial Intelligence Canvas (Center 70-80%) */}
+        {/* Zone B: Main Geospatial Intelligence Canvas or Crisis Intelligence Pipeline */}
         <main className="flex-1 relative h-full w-full overflow-hidden bg-[#070b14]">
-          {/* Floating Map Toolbar (Top of Canvas) */}
-          <MapToolbar
-            basemapType={basemapType}
-            onChangeBasemap={setBasemapType}
-            onFlyToLocation={handleFlyTo}
-            onResetView={handleResetView}
-            visibleLayers={visibleLayers}
-            onToggleLayer={onToggleLayer}
-            activeDrawingMode={activeDrawingMode}
-            onSetDrawingMode={setActiveDrawingMode}
-            onClearDrawing={onClearDrawing}
-          />
+          {activeTool === 'pipeline' ? (
+            <div className="w-full h-full overflow-hidden flex flex-col bg-[#05080f] relative z-10 animate-fade-in">
+              <div className="px-4 py-2.5 bg-[#080d1a] border-b border-cyan-500/20 flex items-center justify-between shadow-md">
+                <div className="flex items-center gap-2">
+                  <Cpu className="w-4 h-4 text-purple-400 animate-pulse" />
+                  <span className="font-mono text-xs font-bold tracking-wider text-slate-200 uppercase">
+                    AI-Driven Crisis Resource Intelligence &amp; Autonomous Logistics Pipeline
+                  </span>
+                </div>
+                <button
+                  onClick={() => handleSelectTool('map')}
+                  className="px-3 py-1 text-xs font-mono rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-600/50 hover:bg-cyan-900 transition-colors flex items-center gap-1.5 shadow-sm"
+                >
+                  <Compass className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Return to Geospatial Map Canvas</span>
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                <CrisisIntelligencePipeline
+                  onClose={() => handleSelectTool('overview')}
+                  onFlyToLocation={(coords, zoom) => {
+                    handleFlyTo(coords, zoom);
+                    handleSelectTool('map');
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Floating Map Toolbar (Top of Canvas) */}
+              <MapToolbar
+                basemapType={basemapType}
+                onChangeBasemap={setBasemapType}
+                onFlyToLocation={handleFlyTo}
+                onResetView={handleResetView}
+                visibleLayers={visibleLayers}
+                onToggleLayer={onToggleLayer}
+                activeDrawingMode={activeDrawingMode}
+                onSetDrawingMode={setActiveDrawingMode}
+                onClearDrawing={onClearDrawing}
+              />
 
-          {/* Floating Intelligence Widgets (Corners of Canvas) */}
-          <FloatingWidgets
-            metrics={metrics}
-            advisorData={advisorData}
-            sheltersCount={shelters.length}
-            shelterCapacityTotal={shelterCapacityTotal}
-            shelterOccupancyTotal={shelterOccupancyTotal}
-            fieldTeamsCount={stagingBases.length}
-            currentStepHour={currentStep?.hour ?? 0}
-          />
+              {/* Floating Intelligence Widgets (Corners of Canvas) */}
+              <FloatingWidgets
+                metrics={metrics}
+                advisorData={advisorData}
+                sheltersCount={shelters.length}
+                shelterCapacityTotal={shelterCapacityTotal}
+                shelterOccupancyTotal={shelterOccupancyTotal}
+                fieldTeamsCount={stagingBases.length}
+                currentStepHour={currentStep?.hour ?? 0}
+              />
 
-          {/* Interactive Leaflet Geospatial Map */}
-          <div className="w-full h-full relative z-0">
-            <MapContainer
-              center={center}
-              bounds={bounds}
-              shelters={shelters}
-              warehouses={warehouses}
-              distributionPoints={distributionPoints}
-              populationClusters={populationClusters}
-              stagingBases={stagingBases}
-              currentStep={currentStep}
-              definedZones={definedZones}
-              activeDrawingMode={activeDrawingMode}
-              circleRadiusMeters={circleRadiusMeters}
-              draftPolygonPoints={draftPolygonPoints}
-              draftCircleCenter={draftCircleCenter}
-              onMapClick={onMapClick}
-              visibleLayers={visibleLayers}
-              onSelectShelter={handleSelectShelterInternal}
-              onSelectDistributionPoint={handleSelectDistributionPointInternal}
-              onSelectRoute={handleSelectRouteInternal}
-              themeMode="dark"
-              basemapType={basemapType}
-              flyToLocation={flyToLocation}
-            />
-          </div>
+              {/* Interactive Leaflet Geospatial Map */}
+              <div className="w-full h-full relative z-0">
+                <MapContainer
+                  center={center}
+                  bounds={bounds}
+                  shelters={shelters}
+                  warehouses={warehouses}
+                  distributionPoints={distributionPoints}
+                  populationClusters={populationClusters}
+                  stagingBases={stagingBases}
+                  currentStep={currentStep}
+                  definedZones={definedZones}
+                  activeDrawingMode={activeDrawingMode}
+                  circleRadiusMeters={circleRadiusMeters}
+                  draftPolygonPoints={draftPolygonPoints}
+                  draftCircleCenter={draftCircleCenter}
+                  onMapClick={onMapClick}
+                  visibleLayers={visibleLayers}
+                  onSelectShelter={handleSelectShelterInternal}
+                  onSelectDistributionPoint={handleSelectDistributionPointInternal}
+                  onSelectRoute={handleSelectRouteInternal}
+                  themeMode="dark"
+                  basemapType={basemapType}
+                  flyToLocation={flyToLocation}
+                  incidents={incidents}
+                />
+              </div>
 
-          {/* Incident Timeline Dock (Bottom of Canvas) */}
-          <TimelineDock
-            currentStepIndex={currentStepIndex}
-            onStepChange={onStepChange}
-            timelineSteps={timelineSteps}
-            isPlaying={isPlaying}
-            onTogglePlay={onTogglePlay}
-            playbackSpeed={playbackSpeed}
-            onSpeedChange={onSpeedChange}
-            onReset={() => onStepChange(0)}
-          />
+              {/* Incident Timeline Dock (Bottom of Canvas) */}
+              <TimelineDock
+                currentStepIndex={currentStepIndex}
+                onStepChange={onStepChange}
+                timelineSteps={timelineSteps}
+                isPlaying={isPlaying}
+                onTogglePlay={onTogglePlay}
+                playbackSpeed={playbackSpeed}
+                onSpeedChange={onSpeedChange}
+                onReset={() => onStepChange(0)}
+              />
+            </>
+          )}
         </main>
 
         {/* Zone C: Contextual Intelligence Panel (Right Drawer) */}
-        <ContextualIntelligencePanel
-          isOpen={isRightPanelOpen}
-          onClose={() => setIsRightPanelOpen(false)}
-          activeTool={activeTool}
-          selectedEntity={selectedEntity}
-          onClearSelectedEntity={() => setSelectedEntity(null)}
-          shelters={shelters}
-          warehouses={warehouses}
-          distributionPoints={distributionPoints}
-          stagingBases={stagingBases}
-          parameters={parameters}
-          onParametersChange={onParametersChange}
-          activePresetId={activePresetId}
-          onSelectPreset={onSelectPreset}
-          onRunSimulation={onRunSimulation}
-          isSimulating={isSimulating}
-          liveInventory={liveInventory}
-          advisorData={advisorData}
-          onOpenAllocateModal={onOpenAllocateModal}
-          onOpenRouteInspector={onSelectRoute}
-          onScrambleSortie={() => setConfirmAirliftOpen(true)}
-          onTriggerSiren={() => setConfirmSirenOpen(true)}
-          currentStep={currentStep}
-          onFlyToLocation={handleFlyTo}
-        />
+        {activeTool !== 'pipeline' && (
+          <ContextualIntelligencePanel
+            isOpen={isRightPanelOpen}
+            onClose={() => setIsRightPanelOpen(false)}
+            activeTool={activeTool}
+            selectedEntity={selectedEntity}
+            onClearSelectedEntity={() => setSelectedEntity(null)}
+            shelters={shelters}
+            warehouses={warehouses}
+            distributionPoints={distributionPoints}
+            stagingBases={stagingBases}
+            parameters={parameters}
+            onParametersChange={onParametersChange}
+            activePresetId={activePresetId}
+            onSelectPreset={onSelectPreset}
+            onRunSimulation={onRunSimulation}
+            isSimulating={isSimulating}
+            liveInventory={liveInventory}
+            advisorData={advisorData}
+            onOpenAllocateModal={onOpenAllocateModal}
+            onOpenRouteInspector={onSelectRoute}
+            onScrambleSortie={() => setConfirmAirliftOpen(true)}
+            onTriggerSiren={() => setConfirmSirenOpen(true)}
+            currentStep={currentStep}
+            onFlyToLocation={handleFlyTo}
+            onSelectTool={handleSelectTool}
+          />
+        )}
       </div>
 
       {/* ========================================================================= */}

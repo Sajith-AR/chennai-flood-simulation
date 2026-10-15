@@ -12,6 +12,7 @@ import {
   PopulationClusterEntity,
   StagingBaseEntity,
   RouteInspectionData,
+  DisasterIncident,
 } from '@/lib/types';
 
 export interface ChennaiMapProps {
@@ -37,6 +38,7 @@ export interface ChennaiMapProps {
     warehouses: boolean;
     distributionPoints: boolean;
     populationHeatmap: boolean;
+    incidents?: boolean;
   };
   onSelectShelter?: (shelterId: string) => void;
   onSelectDistributionPoint?: (pointId: string) => void;
@@ -44,6 +46,7 @@ export interface ChennaiMapProps {
   themeMode?: 'light' | 'dark';
   basemapType?: 'dark' | 'satellite' | 'streets';
   flyToLocation?: { center: Coordinates; zoom?: number } | null;
+  incidents?: DisasterIncident[];
 }
 
 const DynamicChennaiMap = dynamic<ChennaiMapProps>(

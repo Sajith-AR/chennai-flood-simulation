@@ -15,6 +15,7 @@ import {
   WifiOff,
   Maximize2,
   ExternalLink,
+  Cpu,
 } from 'lucide-react';
 import { AIAdvisorData } from '@/lib/types';
 
@@ -28,6 +29,7 @@ interface TopCommandBarProps {
   onTriggerAirlift: () => void;
   onToggleClassicMode: () => void;
   isSimulating?: boolean;
+  onOpenPipeline?: () => void;
 }
 
 export default function TopCommandBar({
@@ -40,6 +42,7 @@ export default function TopCommandBar({
   onTriggerAirlift,
   onToggleClassicMode,
   isSimulating = false,
+  onOpenPipeline,
 }: TopCommandBarProps) {
   // Live Operational Clocks
   const [istTime, setIstTime] = useState<string>('');
@@ -168,6 +171,18 @@ export default function TopCommandBar({
           <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
           <span className="font-bold tracking-wider text-[11px]">{alertCount} ALERTS ACTIVE</span>
         </div>
+
+        {/* Crisis Pipeline Quick Switcher */}
+        {onOpenPipeline && (
+          <button
+            onClick={onOpenPipeline}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/60 text-purple-200 border border-purple-500/50 hover:bg-purple-900/70 hover:text-white hover:border-purple-400 font-bold text-[11px] tracking-wider transition-all shadow-[0_0_12px_rgba(168,85,247,0.25)]"
+            title="Open AI-Driven Crisis Resource Intelligence & OR-Tools Pipeline"
+          >
+            <Cpu className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
+            <span>CRISIS PIPELINE</span>
+          </button>
+        )}
 
         {/* Emergency Siren Klaxon Action */}
         <button

@@ -32,12 +32,29 @@ async def lifespan(app: FastAPI):
     supply_solver = SupplyChainSolver(road_engine, ml_predictor=ml_predictor)
     ai_advisor = AIAdvisorService(ml_predictor=ml_predictor)
 
+    from backend.app.services.incident_service import IncidentService
+    from backend.app.services.nlp_extractor import NLPExtractor
+    from backend.app.services.demand_forecaster import DemandForecaster
+    from backend.app.services.vulnerability_scorer import VulnerabilityScorer
+    from backend.app.services.allocation_optimizer import AllocationOptimizer
+
+    incident_service = IncidentService()
+    nlp_extractor = NLPExtractor()
+    demand_forecaster = DemandForecaster(ml_predictor=ml_predictor, supply_solver=supply_solver)
+    vulnerability_scorer = VulnerabilityScorer()
+    allocation_optimizer = AllocationOptimizer(supply_solver=supply_solver)
+
     app.state.road_engine = road_engine
     app.state.flood_engine = flood_engine
     app.state.evac_solver = evac_solver
     app.state.supply_solver = supply_solver
     app.state.ai_advisor = ai_advisor
     app.state.ml_predictor = ml_predictor
+    app.state.incident_service = incident_service
+    app.state.nlp_extractor = nlp_extractor
+    app.state.demand_forecaster = demand_forecaster
+    app.state.vulnerability_scorer = vulnerability_scorer
+    app.state.allocation_optimizer = allocation_optimizer
     app.state.simulation_lock = RLock()
 
     yield

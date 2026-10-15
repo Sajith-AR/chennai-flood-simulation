@@ -123,6 +123,31 @@ function createAmphibiousIcon(callsign: string) {
   return createDivIcon(html, 'amphibious-icon', [48, 48], [24, 24]);
 }
 
+// 4. Custom SVG Animated Marker for Disaster Incidents (NLP Feed / Emergency Calls)
+function createIncidentMarkerIcon(urgency: string, waterDepth: number) {
+  const isCritical = urgency === 'critical';
+  const colorClass = isCritical
+    ? 'from-red-600 via-rose-700 to-slate-950 border-red-400'
+    : 'from-amber-600 via-orange-700 to-slate-950 border-amber-400';
+  const ringClass = isCritical ? 'border-red-500 animate-ping' : 'border-amber-500 animate-pulse';
+  const html = `
+    <div class="relative flex items-center justify-center cursor-pointer group" style="width: 44px; height: 44px;">
+      <div class="absolute inset-0 rounded-full border-2 ${ringClass} opacity-60"></div>
+      <div class="relative z-10 w-8 h-8 rounded-xl bg-gradient-to-br ${colorClass} border-2 shadow-lg flex items-center justify-center text-white transform group-hover:scale-110 transition-transform">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="absolute -bottom-2 z-20 px-1 py-0.2 bg-slate-950 text-white font-mono text-[8px] font-bold rounded border ${isCritical ? 'border-red-500 text-red-300' : 'border-amber-500 text-amber-300'} shadow whitespace-nowrap">
+        ${urgency.toUpperCase()}
+      </div>
+    </div>
+  `;
+  return createDivIcon(html, 'disaster-incident-icon', [44, 44], [22, 22]);
+}
+
 // Map Click Interceptor Component
 function MapClickHandler({
   onMapClick,
@@ -233,6 +258,7 @@ export default function ChennaiMap({
   themeMode = 'dark',
   basemapType = 'dark',
   flyToLocation = null,
+  incidents = [],
 }: ChennaiMapProps) {
   // Convert GeoJSON polygon coordinates ([lon, lat]) to Leaflet [lat, lon]
   const convertGeoJsonPolygon = (coords: number[][][]): [number, number][] => {
@@ -1010,6 +1036,83 @@ export default function ChennaiMap({
                         <span className="font-bold text-slate-900 dark:text-slate-100">{dp.demand?.medical_kits ?? 0}</span>
                       </div>
                     </div>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+
+        {/* 10. Disaster Crisis Incidents Layer (NLP Extraction Feed) */}
+        {visibleLayers.incidents !== false &&
+          incidents &&
+          incidents.map((inc) => {
+            const icon = createIncidentMarkerIcon(inc.urgency, inc.water_depth_m);
+            return (
+              <Marker
+                key={`incident-${inc.id}`}
+                position={inc.coordinates}
+                icon={icon}
+              >
+                <Popup>
+                  <div className="p-3 text-xs font-sans text-slate-800 dark:text-slate-200 min-w-[260px] max-w-[320px]">
+                    <div className="flex items-start justify-between gap-1.5">
+                      <span
+                        className={`font-mono text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider ${
+                          inc.urgency === 'critical'
+                            ? 'bg-red-950 text-red-300 border border-red-700'
+                            : 'bg-amber-950 text-amber-300 border border-amber-700'
+                        }`}
+                      >
+                        {inc.urgency} ALERT • {inc.id}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        {inc.zone}
+                      </span>
+                    </div>
+                    <div className="font-bold text-sm text-slate-900 dark:text-slate-100 mt-1">
+                      {inc.title}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                      📍 {inc.location}
+                    </div>
+
+                    <p className="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 italic line-clamp-2">
+                      &quot;{inc.description}&quot;
+                    </p>
+
+                    <div className="mt-2.5 grid grid-cols-2 gap-1.5 text-xs font-mono">
+                      <div className="bg-slate-900/80 p-1.5 rounded border border-slate-700">
+                        <span className="text-[9px] text-slate-400 block uppercase">Water Depth</span>
+                        <span className="font-bold text-red-400">{inc.water_depth_m.toFixed(1)} m</span>
+                      </div>
+                      <div className="bg-slate-900/80 p-1.5 rounded border border-slate-700">
+                        <span className="text-[9px] text-slate-400 block uppercase">Stranded Citizens</span>
+                        <span className="font-bold text-amber-400">{inc.affected_population.toLocaleString()}</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-2 p-1.5 rounded bg-slate-900/60 border border-slate-800 text-[10px] font-mono space-y-0.5">
+                      <div className="text-slate-400 font-bold uppercase">Requested Relief Demands:</div>
+                      <div className="text-slate-300">
+                        💧 {inc.demands?.water_litres?.toLocaleString() ?? 0}L Water • 🍱 {inc.demands?.food_rations?.toLocaleString() ?? 0} Rations
+                      </div>
+                      <div className="text-slate-300">
+                        🩹 {inc.demands?.medical_kits ?? 0} Kits • 🛶 {inc.demands?.rescue_boats ?? 0} Boats
+                      </div>
+                    </div>
+
+                    <div className="mt-2 text-[10px] font-mono flex items-center justify-between">
+                      <span className="text-slate-400">Road Corridor:</span>
+                      <span className={`font-bold ${inc.road_accessible ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {inc.road_accessible ? 'ROAD ACCESSIBLE' : 'SEVERED / FLOODED'}
+                      </span>
+                    </div>
+
+                    {inc.allocated_depot && (
+                      <div className="mt-1.5 text-[10px] font-mono p-1 rounded bg-teal-950/70 border border-teal-700 text-teal-300">
+                        ✓ OR-Tools Solver Allocated: <b>{inc.allocated_depot}</b>
+                      </div>
+                    )}
                   </div>
                 </Popup>
               </Marker>

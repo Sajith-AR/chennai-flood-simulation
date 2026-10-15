@@ -284,3 +284,222 @@ export async function dispatchAirliftSortie(
   };
 }
 
+// ============================================================================
+// CRISIS RESOURCE INTELLIGENCE & AUTONOMOUS LOGISTICS PLATFORM CLIENT
+// ============================================================================
+
+export async function getIncidents(urgency?: string, status?: string, search?: string) {
+  try {
+    const params = new URLSearchParams();
+    if (urgency) params.append('urgency', urgency);
+    if (status) params.append('status', status);
+    if (search) params.append('search', search);
+
+    const res = await fetch(`${API_BASE_URL}/api/incidents?${params.toString()}`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.incidents || [];
+    }
+  } catch (e) {
+    console.warn('API getIncidents fallback:', e);
+  }
+  return [];
+}
+
+export async function createIncident(incidentData: any) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/incidents`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(incidentData),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.incident;
+    }
+  } catch (e) {
+    console.warn('API createIncident fallback:', e);
+  }
+  return null;
+}
+
+export async function updateIncident(incidentId: string, updates: any) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/incidents/${incidentId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.incident;
+    }
+  } catch (e) {
+    console.warn('API updateIncident fallback:', e);
+  }
+  return null;
+}
+
+export async function deleteIncident(incidentId: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/incidents/${incidentId}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
+  } catch (e) {
+    console.warn('API deleteIncident fallback:', e);
+  }
+  return false;
+}
+
+export async function extractNLP(text: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/nlp/extract`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.extracted_data;
+    }
+  } catch (e) {
+    console.warn('API extractNLP fallback:', e);
+  }
+  return null;
+}
+
+export async function getNLPSamples() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/nlp/samples`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.samples || [];
+    }
+  } catch (e) {
+    console.warn('API getNLPSamples fallback:', e);
+  }
+  return [];
+}
+
+export async function getDemandForecast(params: {
+  population?: number;
+  rainfall_mm_hr?: number;
+  flood_depth_m?: number;
+  vulnerability_score?: number;
+  horizon_hours?: number;
+  resource_type?: string;
+}) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/forecast/demand`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        population: params.population ?? 500,
+        rainfall_mm_hr: params.rainfall_mm_hr ?? 3.5,
+        flood_depth_m: params.flood_depth_m ?? 1.4,
+        vulnerability_score: params.vulnerability_score ?? 75.0,
+        horizon_hours: params.horizon_hours ?? 24,
+        resource_type: params.resource_type ?? 'all',
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.forecast;
+    }
+  } catch (e) {
+    console.warn('API getDemandForecast fallback:', e);
+  }
+  return null;
+}
+
+export async function getVulnerabilityScores() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/vulnerability/scores`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.rankings || [];
+    }
+  } catch (e) {
+    console.warn('API getVulnerabilityScores fallback:', e);
+  }
+  return [];
+}
+
+export async function optimizeAllocation(incidentIds?: string[]) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/allocation/optimize`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        incident_ids: incidentIds,
+        use_current_incidents: true,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.result;
+    }
+  } catch (e) {
+    console.warn('API optimizeAllocation fallback:', e);
+  }
+  return null;
+}
+
+export async function optimizeRoute(params: {
+  source_coords: [number, number];
+  destination_coords: [number, number];
+  source_name?: string;
+  destination_name?: string;
+  cargo?: Record<string, number>;
+  preferred_mode?: string;
+}) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/routes/optimize`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.route;
+    }
+  } catch (e) {
+    console.warn('API optimizeRoute fallback:', e);
+  }
+  return null;
+}
+
+export async function runCrisisPipeline(rawMessage?: string, incidentId?: string, horizonHours: number = 24) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/pipeline/run`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        raw_message: rawMessage,
+        incident_id: incidentId,
+        horizon_hours: horizonHours,
+      }),
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn('API runCrisisPipeline fallback:', e);
+  }
+  return null;
+}
+
+export async function getDashboardStats() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/dashboard/stats`);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn('API getDashboardStats fallback:', e);
+  }
+  return null;
+}
+
+

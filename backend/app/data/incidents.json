@@ -1,0 +1,353 @@
+[
+  {
+    "id": "INC-013",
+    "title": "Incident at Velachery",
+    "location": "Velachery",
+    "zone": "Zone 13 (Velachery)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.8,
+    "affected_population": 750,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:53:47.150430+00:00",
+    "description": "Severe waterlogging at Velachery AGS Colony with water depth 1.8 meters. 750 stranded families urgently require drinking water and food packets. Roads are cut off.",
+    "demands": {
+      "water_litres": 7500,
+      "food_rations": 1500,
+      "medical_kits": 30,
+      "blankets": 450,
+      "rescue_boats": 7
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-012",
+    "title": "Incident at Velachery",
+    "location": "Velachery",
+    "zone": "Zone 13 (Velachery)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.8,
+    "affected_population": 750,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:53:38.069419+00:00",
+    "description": "Severe waterlogging at Velachery AGS Colony with water depth 1.8 meters. 750 stranded families urgently require drinking water and food packets. Roads are cut off.",
+    "demands": {
+      "water_litres": 7500,
+      "food_rations": 1500,
+      "medical_kits": 30,
+      "blankets": 450,
+      "rescue_boats": 7
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-011",
+    "title": "Incident at Velachery",
+    "location": "Velachery",
+    "zone": "Zone 13 (Velachery)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.8,
+    "affected_population": 750,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:53:30.155850+00:00",
+    "description": "Severe waterlogging at Velachery AGS Colony with water depth 1.8 meters. 750 stranded families urgently require drinking water and food packets. Roads are cut off.",
+    "demands": {
+      "water_litres": 7500,
+      "food_rations": 1500,
+      "medical_kits": 30,
+      "blankets": 450,
+      "rescue_boats": 7
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-010",
+    "title": "Incident at Velachery",
+    "location": "Velachery",
+    "zone": "Zone 13 (Velachery)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.8,
+    "affected_population": 750,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:53:23.755144+00:00",
+    "description": "Severe waterlogging at Velachery AGS Colony with water depth 1.8 meters. 750 stranded families urgently require drinking water and food packets. Roads are cut off.",
+    "demands": {
+      "water_litres": 7500,
+      "food_rations": 1500,
+      "medical_kits": 30,
+      "blankets": 450,
+      "rescue_boats": 7
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-009",
+    "title": "Incident at Velachery",
+    "location": "Velachery",
+    "zone": "Zone 13 (Velachery)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 0.8,
+    "affected_population": 500,
+    "urgency": "critical",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:39:28.474810+00:00",
+    "description": "SOS! Heavy flood in Velachery AGS Colony, 500 people stranded!",
+    "demands": {
+      "water_litres": 5000,
+      "food_rations": 1000,
+      "medical_kits": 50,
+      "blankets": 300,
+      "rescue_boats": 0
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-008",
+    "title": "Incident at Mudichur",
+    "location": "Mudichur",
+    "zone": "Suburban South (Tambaram Belt)",
+    "coordinates": [
+      12.9249,
+      80.0883
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.52,
+    "affected_population": 400,
+    "urgency": "critical",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:38:09.336222+00:00",
+    "description": "SOS! Heavy flood in Mudichur Krishna Nagar. Over 400 people stranded with water over 5 feet high. Urgent food and medical kits needed!",
+    "demands": {
+      "water_litres": 4000,
+      "food_rations": 800,
+      "medical_kits": 40,
+      "blankets": 240,
+      "rescue_boats": 4
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-007",
+    "title": "Incident at Mudichur",
+    "location": "Mudichur",
+    "zone": "Suburban South (Tambaram Belt)",
+    "coordinates": [
+      12.9249,
+      80.0883
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.52,
+    "affected_population": 400,
+    "urgency": "critical",
+    "status": "reported",
+    "reported_at": "2026-10-15T08:36:38.503755+00:00",
+    "description": "SOS! Heavy flood in Mudichur Krishna Nagar. Over 400 people stranded with water over 5 feet high. Urgent food and medical kits needed!",
+    "demands": {
+      "water_litres": 4000,
+      "food_rations": 800,
+      "medical_kits": 40,
+      "blankets": 240,
+      "rescue_boats": 4
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-001",
+    "title": "Catastrophic Flash Flood at AGS Colony",
+    "location": "Velachery AGS Colony",
+    "zone": "Zone 13 (Velachery / Guindy)",
+    "coordinates": [
+      12.9752,
+      80.2215
+    ],
+    "disaster_type": "Urban Inundation",
+    "water_depth_m": 1.8,
+    "affected_population": 520,
+    "urgency": "critical",
+    "status": "reported",
+    "reported_at": "2026-10-15T07:30:00Z",
+    "description": "Pallikaranai wetland runoff breached retaining wall. Over 520 citizens stranded in first-floor apartments with water entering ground floors. Drinking water contaminated, baby food required urgently.",
+    "demands": {
+      "water_litres": 5200,
+      "food_rations": 1040,
+      "medical_kits": 55,
+      "blankets": 350,
+      "rescue_boats": 4
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-002",
+    "title": "Adyar Headwaters Overflow in Residential Suburbs",
+    "location": "Mudichur Krishna Nagar",
+    "zone": "Suburban South (Tambaram Belt)",
+    "coordinates": [
+      12.9249,
+      80.0883
+    ],
+    "disaster_type": "River Overflow",
+    "water_depth_m": 2.2,
+    "affected_population": 380,
+    "urgency": "critical",
+    "status": "verified",
+    "reported_at": "2026-10-15T08:15:00Z",
+    "description": "Mudichur main road submerged under 2.2m water. Elderly residents cut off from medical supplies. Need insulin and dry food rations immediately. Amphibious boat rescue needed.",
+    "demands": {
+      "water_litres": 3800,
+      "food_rations": 760,
+      "medical_kits": 80,
+      "blankets": 280,
+      "rescue_boats": 6
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-003",
+    "title": "Subway Submersion & Severe Waterlogging",
+    "location": "Perambur Barracks Road",
+    "zone": "Zone 4 (Tondiarpet / Perambur)",
+    "coordinates": [
+      13.114,
+      80.245
+    ],
+    "disaster_type": "Subway Submersion",
+    "water_depth_m": 1.1,
+    "affected_population": 240,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T09:00:00Z",
+    "description": "Railway underpass completely flooded preventing civilian egress. 240 people clustered at community hall requiring clean drinking water and hot meals.",
+    "demands": {
+      "water_litres": 2400,
+      "food_rations": 480,
+      "medical_kits": 25,
+      "blankets": 150,
+      "rescue_boats": 1
+    },
+    "road_accessible": true,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-004",
+    "title": "Commercial Core Urban Flash Inundation",
+    "location": "T. Nagar Usman Road",
+    "zone": "Zone 10 (Kodambakkam / T. Nagar)",
+    "coordinates": [
+      13.0418,
+      80.2341
+    ],
+    "disaster_type": "Flash Flood",
+    "water_depth_m": 0.85,
+    "affected_population": 160,
+    "urgency": "medium",
+    "status": "reported",
+    "reported_at": "2026-10-15T09:45:00Z",
+    "description": "Stormwater drains choked by silt. Basement shopping complexes flooded. 160 shop attendants and residents needing water pouches and basic first aid.",
+    "demands": {
+      "water_litres": 1600,
+      "food_rations": 320,
+      "medical_kits": 20,
+      "blankets": 80,
+      "rescue_boats": 0
+    },
+    "road_accessible": true,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-005",
+    "title": "Ennore Creek Tidal Storm Surge",
+    "location": "Manali Industrial Corridor",
+    "zone": "Zone 2 (Manali / Ennore)",
+    "coordinates": [
+      13.17,
+      80.26
+    ],
+    "disaster_type": "Storm Surge",
+    "water_depth_m": 1.6,
+    "affected_population": 410,
+    "urgency": "critical",
+    "status": "verified",
+    "reported_at": "2026-10-15T10:20:00Z",
+    "description": "High tide backing up Buckingham Canal into low-lying settlements. Petrochemical plant perimeter submerged. 410 contractual workers stranded on elevated storage platforms.",
+    "demands": {
+      "water_litres": 4100,
+      "food_rations": 820,
+      "medical_kits": 40,
+      "blankets": 300,
+      "rescue_boats": 3
+    },
+    "road_accessible": false,
+    "allocated_depot": null,
+    "allocated_resources": null
+  },
+  {
+    "id": "INC-006",
+    "title": "Lake Surplus Bund Breach",
+    "location": "Kolathur Thanikachalam Nagar",
+    "zone": "Zone 6 (Kolathur / Villivakkam)",
+    "coordinates": [
+      13.125,
+      80.218
+    ],
+    "disaster_type": "Bund Breach",
+    "water_depth_m": 1.3,
+    "affected_population": 310,
+    "urgency": "high",
+    "status": "reported",
+    "reported_at": "2026-10-15T11:05:00Z",
+    "description": "Retaining bund breach causing sudden rush of lake overflow into ground floor homes. 310 residents evacuated to temple mandapam requiring mats, blankets, and water.",
+    "demands": {
+      "water_litres": 3100,
+      "food_rations": 620,
+      "medical_kits": 30,
+      "blankets": 250,
+      "rescue_boats": 2
+    },
+    "road_accessible": true,
+    "allocated_depot": null,
+    "allocated_resources": null
+  }
+]

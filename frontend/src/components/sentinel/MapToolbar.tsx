@@ -32,6 +32,7 @@ interface MapToolbarProps {
     warehouses: boolean;
     distributionPoints: boolean;
     populationHeatmap: boolean;
+    incidents?: boolean;
   };
   onToggleLayer: (layerName: string) => void;
   activeDrawingMode: 'none' | 'circle' | 'polygon';
@@ -181,6 +182,7 @@ export default function MapToolbar({
                 { id: 'shelters', label: 'GCC Relief Shelters' },
                 { id: 'warehouses', label: 'Strategic Warehouses' },
                 { id: 'populationHeatmap', label: 'Population Risk Zones' },
+                { id: 'incidents', label: 'Crisis Incidents (NLP Feed)' },
               ].map((layer) => {
                 const isChecked = (visibleLayers as any)[layer.id];
                 return (

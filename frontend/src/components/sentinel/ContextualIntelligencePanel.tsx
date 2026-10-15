@@ -30,6 +30,7 @@ import {
   Info,
   Layers,
   MapPin,
+  Cpu,
 } from 'lucide-react';
 import {
   ShelterEntity,
@@ -74,6 +75,7 @@ interface ContextualIntelligencePanelProps {
   onTriggerSiren: () => void;
   currentStep: TimelineStep | null;
   onFlyToLocation?: (coords: Coordinates, zoom?: number) => void;
+  onSelectTool?: (tool: SentinelTool) => void;
 }
 
 export default function ContextualIntelligencePanel({
@@ -100,6 +102,7 @@ export default function ContextualIntelligencePanel({
   onTriggerSiren,
   currentStep,
   onFlyToLocation,
+  onSelectTool,
 }: ContextualIntelligencePanelProps) {
   const [shelterSearch, setShelterSearch] = useState('');
   const [copiedText, setCopiedText] = useState<string | null>(null);
@@ -519,6 +522,33 @@ export default function ContextualIntelligencePanel({
             {/* 2. Situation Report (SitRep Overview) */}
             {activeTool === 'overview' && (
               <div className="space-y-3.5 font-mono text-xs">
+                {/* Autonomous Crisis Intelligence Launcher Card */}
+                <div className="p-3.5 rounded-xl bg-gradient-to-br from-purple-950/60 via-slate-900/90 to-cyan-950/50 border border-purple-500/40 shadow-[0_0_20px_rgba(168,85,247,0.2)] space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Cpu className="w-4 h-4 text-purple-400 animate-pulse" />
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-purple-300">
+                        Autonomous Crisis Pipeline
+                      </span>
+                    </div>
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-900/60 text-purple-200 border border-purple-600/40 font-bold">
+                      7-STAGE ENGINE
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                    Execute end-to-end incident NLP extraction, multi-commodity Sphere demand forecasting, MCDA priority scoring, Google OR-Tools optimization, and multi-modal route dispatching.
+                  </p>
+                  {onSelectTool && (
+                    <button
+                      onClick={() => onSelectTool('pipeline')}
+                      className="w-full py-2 rounded-lg font-mono text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-[0_0_12px_rgba(168,85,247,0.3)] flex items-center justify-center gap-1.5"
+                    >
+                      <span>LAUNCH CRISIS INTELLIGENCE WORKSPACE</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
                 {/* Executive Summary */}
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
                   <div className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">

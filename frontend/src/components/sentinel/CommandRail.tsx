@@ -15,11 +15,13 @@ import {
   ChevronRight,
   Sparkles,
   Info,
+  Cpu,
 } from 'lucide-react';
 
 export type SentinelTool =
   | 'overview'
   | 'map'
+  | 'pipeline'
   | 'simulation'
   | 'flood'
   | 'shelters'
@@ -55,6 +57,14 @@ export default function CommandRail({
     badge?: string | number;
     badgeColor?: string;
   }[] = [
+    {
+      id: 'pipeline',
+      label: 'Crisis Intelligence',
+      sublabel: 'NLP, Forecast & OR-Tools',
+      icon: Cpu,
+      badge: 'AI OR-TOOLS',
+      badgeColor: 'bg-purple-950 text-purple-300 border-purple-700',
+    },
     {
       id: 'overview',
       label: 'Situation Report',
