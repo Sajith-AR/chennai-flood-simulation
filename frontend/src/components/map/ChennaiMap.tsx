@@ -19,6 +19,11 @@ import 'leaflet/dist/leaflet.css';
 import { ChennaiMapProps } from './MapContainer';
 import { Coordinates, RouteInspectionData, StagingBaseEntity } from '@/lib/types';
 import { CHENNAI_STAGING_BASES } from '@/lib/constants';
+import {
+  getResolvedBasemapSpec,
+  getOpenWeatherOverlayUrl,
+  getInitialMapApiKeys,
+} from '@/lib/mapConfig';
 
 // Helper to create Leaflet DivIcons
 function createDivIcon(
@@ -260,6 +265,19 @@ export default function ChennaiMap({
   flyToLocation = null,
   incidents = [],
 }: ChennaiMapProps) {
+  // Live Map API Keys State (Mapbox, MapTiler, Stadia, OpenWeather)
+  const [mapKeys, setMapKeys] = React.useState(getInitialMapApiKeys());
+
+  React.useEffect(() => {
+    const handler = (e: any) => {
+      if (e.detail) {
+        setMapKeys(e.detail);
+      }
+    };
+    window.addEventListener('sentinel-map-keys-updated', handler);
+    return () => window.removeEventListener('sentinel-map-keys-updated', handler);
+  }, []);
+
   // Convert GeoJSON polygon coordinates ([lon, lat]) to Leaflet [lat, lon]
   const convertGeoJsonPolygon = (coords: number[][][]): [number, number][] => {
     if (!coords || coords.length === 0 || !coords[0]) return [];
@@ -397,19 +415,32 @@ export default function ChennaiMap({
 
         <MapFlyToHandler target={flyToLocation} />
 
-        {/* Dynamic Basemap Tile Provider (CartoDB Dark Matter / Satellite Recon / Voyager Streets) */}
+        {/* Dynamic Basemap Tile Provider (Mapbox / MapTiler / Stadia / CartoDB / Esri) */}
         {(() => {
-          const activeBasemap =
-            BASEMAP_CONFIG[basemapType] ||
-            BASEMAP_CONFIG[themeMode === 'light' ? 'streets' : 'dark'];
+          const activeBasemap = getResolvedBasemapSpec(basemapType, mapKeys);
           return (
             <TileLayer
-              key={`${basemapType}-${themeMode}`}
+              key={`${activeBasemap.id}-${basemapType}-${themeMode}`}
               attribution={activeBasemap.attribution}
               url={activeBasemap.url}
               subdomains={activeBasemap.subdomains || 'abc'}
               maxZoom={activeBasemap.maxZoom || 20}
               maxNativeZoom={activeBasemap.maxNativeZoom || 18}
+            />
+          );
+        })()}
+
+        {/* Live OpenWeatherMap Precipitation Radar Overlay (if connected) */}
+        {(() => {
+          const weatherUrl = getOpenWeatherOverlayUrl(mapKeys);
+          if (!weatherUrl) return null;
+          return (
+            <TileLayer
+              key="openweather-radar"
+              attribution="&copy; OpenWeatherMap Radar"
+              url={weatherUrl}
+              opacity={0.65}
+              zIndex={12}
             />
           );
         })()}

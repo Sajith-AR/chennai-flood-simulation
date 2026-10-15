@@ -15,9 +15,11 @@ import {
   Sliders,
   Check,
   Info,
+  Key,
 } from 'lucide-react';
 import { Coordinates } from '@/lib/types';
 import { CHENNAI_CENTER } from '@/lib/constants';
+import MapApiKeysModal from '../map/MapApiKeysModal';
 
 interface MapToolbarProps {
   basemapType: 'dark' | 'satellite' | 'streets';
@@ -66,6 +68,7 @@ export default function MapToolbar({
   const [isBasemapOpen, setIsBasemapOpen] = useState(false);
   const [isLayersOpen, setIsLayersOpen] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
+  const [isApiKeysOpen, setIsApiKeysOpen] = useState(false);
 
   return (
     <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
@@ -154,6 +157,21 @@ export default function MapToolbar({
             </div>
           )}
         </div>
+
+        {/* Map API Keys & GIS Provider Config */}
+        <button
+          onClick={() => {
+            setIsApiKeysOpen(true);
+            setIsSearchOpen(false);
+            setIsBasemapOpen(false);
+            setIsLayersOpen(false);
+          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#080d1a]/90 backdrop-blur-md border border-cyan-500/30 text-xs font-mono text-cyan-300 hover:text-white hover:border-cyan-400 shadow-xl transition-all"
+          title="Connect Mapbox, MapTiler, Stadia, or OpenWeather API keys"
+        >
+          <Key className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="hidden sm:inline">Map APIs</span>
+        </button>
 
         {/* Quick Layer Visibility Dropdown */}
         <div className="relative">
@@ -305,6 +323,12 @@ export default function MapToolbar({
           )}
         </div>
       </div>
+
+      {/* Interactive Map API Keys & GIS Provider Modal */}
+      <MapApiKeysModal
+        isOpen={isApiKeysOpen}
+        onClose={() => setIsApiKeysOpen(false)}
+      />
     </div>
   );
 }
